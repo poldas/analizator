@@ -59,7 +59,9 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 </div>
 
 
-<section id="home" name="home"></section>
+<section id="home" name="home">
+
+</section>
 <div id="headerwrap">
     <div class="container">
         <div class="row centered">
@@ -277,7 +279,6 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 
     </div>
 </div>
-
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

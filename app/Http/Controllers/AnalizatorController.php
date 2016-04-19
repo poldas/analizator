@@ -43,12 +43,24 @@ class AnalizatorController extends Controller
         return view('analiza.przegladaj', compact('analizy'));
     }
 
+    public function wykresy()
+    {
+        $analizy = Analiza::all();
+        return view('analiza.wykresy', compact('analizy'));
+    }
+
     public function showAnaliza($id)
     {
         $analiza = Analiza::find($id);
         return view('analiza.show', compact('analiza'));
     }
 
+    public function konfigurujAnaliza($id)
+    {
+        $analiza = Analiza::find($id);
+
+        return redirect('analiza.show')->with('id', $id);
+    }
     public function createNewAnaliza()
     {
         $request = request();
