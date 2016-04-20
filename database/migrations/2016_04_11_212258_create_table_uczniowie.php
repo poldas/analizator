@@ -15,12 +15,15 @@ class CreateTableUczniowie extends Migration
         Schema::create('uczniowie', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nr_ucznia');
+            $table->integer('id_analiza')->length(10)->unsigned();
             $table->string('kod_ucznia');
             $table->string('klasa');
             $table->string('plec');
             $table->string('dysleksja');
             $table->string('lokalizacja');
             $table->timestamps();
+            $table->foreign('id_analiza')->references('id')->on('analiza');
+            $table->unique(array('id_analiza', 'kod_ucznia'));
         });
     }
 

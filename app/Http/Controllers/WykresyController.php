@@ -8,5 +8,8 @@ use App\Http\Requests;
 
 class WykresyController extends Controller
 {
-    //
+    public function wykresy()
+    {
+        return view('analiza.wykresy');
+    }
 }

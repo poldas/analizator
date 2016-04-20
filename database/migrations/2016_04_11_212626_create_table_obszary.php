@@ -13,9 +13,11 @@ class CreateTableObszary extends Migration
     public function up()
     {
         Schema::create('obszary', function (Blueprint $table) {
+            $table->integer('id_analiza')->length(10)->unsigned();
             $table->string('obszar');
             $table->string('umiejetnosc');
             $table->string('nr_zadania');
+            $table->unique(array('id_analiza', 'obszar', 'umiejetnosc', 'nr_zadania'));
         });
     }
 

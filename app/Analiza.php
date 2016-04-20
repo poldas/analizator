@@ -12,4 +12,16 @@ class Analiza extends Model
     public $timestamps = false;
 
     protected $fillable = ['nazwa', 'file_path'];
+
+    public function obszary() {
+        return $this->hasMany('App\Obszar', 'id_analiza');
+    }
+
+    public function wyniki() {
+        return $this->hasMany('App\Wynik', 'id_analiza');
+    }
+
+    public function uczniowie() {
+        return $this->hasMany('App\Uczen', 'id_analiza');
+    }
 }

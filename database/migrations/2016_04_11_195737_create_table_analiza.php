@@ -13,10 +13,11 @@ class CreateTableAnaliza extends Migration
     public function up()
     {
         Schema::create('analiza', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->length(10)->unsigned();
             $table->string('nazwa');
             $table->string('file_path');
             $table->timestamps();
+
         });
     }
 

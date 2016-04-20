@@ -7,8 +7,8 @@
     <li class="treeview {{Helper::setActive('analiza/*')}}">
         <a href="#"><i class='fa fa-link'></i> <span>Analiza testów</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
+            <li class="{{Helper::setActive('analiza/lista')}}"><a href="{{ route('analiza.lista') }}">Lista analiz</a></li>
             <li class="{{Helper::setActive('analiza/create')}}"><a href="{{ route('analiza.create') }}">Dodaj</a></li>
-            <li class="{{Helper::setActive('analiza/przegladaj')}}"><a href="{{ route('analiza.przegladaj') }}">Przeglądaj</a></li>
             <li class="{{Helper::setActive('analiza/wykresy')}}"><a href="{{ route('analiza.wykresy') }}">Wykresy</a></li>
         </ul>
     </li>
