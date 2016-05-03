@@ -15,7 +15,10 @@
                     <div class="panel-heading">Wykresy</div>
 
                     <div class="panel-body">
-                        Wykresy
+
+                        <div id="wykres" class="wykres-area"></div>
+
+
                     </div>
                 </div>
             </div>

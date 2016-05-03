@@ -7,13 +7,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Logika\AnalizaDanych;
 use App\Obszar;
 use App\Wynik;
 use App\Analiza;
 use App\Uczen;
 use App\ParseAnalizaFileData;
 use Storage;
-use Illuminate\Http\Request;
 use Illuminate\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\File;
 use Illuminate\Database\QueryException;
@@ -45,6 +45,13 @@ class AnalizatorController extends Controller
     {
         $analiza = Analiza::find($id);
         $this->addWyniki($analiza);
+        return redirect('analiza/show/'.$id);
+    }
+
+    public function parsuj($id)
+    {
+        $analiza = Analiza::find($id);
+        $this->parsujDaneWykres($analiza);
         return redirect('analiza/show/'.$id);
     }
 
@@ -120,7 +127,7 @@ class AnalizatorController extends Controller
      *
      * @return Response
      */
-    public function createForm(Request $request)
+    public function createForm()
     {
         return view('analiza.create');
     }
@@ -205,4 +212,10 @@ class AnalizatorController extends Controller
         }
     }
 
+    private function parsujDaneWykres(Analiza $analiza)
+    {
+        $analiza = new AnalizaDanych();
+        $dane = $analiza->pobierz();
+//        var_dump($dane);
+    }
 }

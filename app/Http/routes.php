@@ -34,6 +34,7 @@ Route::post('/analiza/store', ['as' => 'analiza.store', 'uses' =>'AnalizatorCont
 Route::get('/analiza/delete/{id}', ['as' => 'analiza.delete', 'uses' =>'AnalizatorController@delete']);
 Route::get('/analiza/show/{id}', ['as' => 'analiza.show', 'uses' =>'AnalizatorController@show']);
 Route::get('/analiza/konfiguruj/{id}', ['as' => 'analiza.konfiguruj', 'uses' =>'AnalizatorController@konfiguruj']);
+Route::get('/analiza/parsuj/{id}', ['as' => 'analiza.parsuj', 'uses' =>'AnalizatorController@parsuj']);
 
 Route::get('/analiza/lista', ['as' => 'analiza.lista', 'uses' =>'AnalizatorController@lista']);
 Route::get('/analiza/wykresy', ['as' => 'analiza.wykresy', 'uses' =>'WykresyController@wykresy']);
