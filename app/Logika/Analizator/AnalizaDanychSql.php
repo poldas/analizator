@@ -1,5 +1,5 @@
 <?php
-namespace App\Logika;
+namespace App\Logika\Analizator;
 interface AnalizaDanychSql {
 
     const POROWNANIE_CALOSC = 'całość';

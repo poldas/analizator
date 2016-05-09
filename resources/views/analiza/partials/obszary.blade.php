@@ -1,8 +1,4 @@
-<h3>Obszary
-    <a href="{{ route('analiza.obszar.delete', ['id_analiza' =>  $analiza->id]) }}">usuń obszar</a> |
-    <a href="#tabela-obszary" data-toggle="collapse">+/-</a>
-</h3>
-<div id="tabela-obszary" class="table-responsive collapse">
+<div id="tabela-obszary" class="table-responsive">
     <table class="table table-hover table-striped tablesorter">
         <thead>
         <tr>

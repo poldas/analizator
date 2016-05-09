@@ -1,6 +1,10 @@
 <?php
 namespace App;
-
+/**
+ * Parsuje dane testu podanego z pliku csv, do postaci tablicy dającej się zapisać w bazie mysql.
+ *
+ * @package App
+ */
 class ParseAnalizaFileData {
 
     public $kolejnosc_naglowka = [ 0 => 'nazwy_zadan', 1 => 'obszar', 2 => 'umiejetnosc', 3 => 'max_punktow'];

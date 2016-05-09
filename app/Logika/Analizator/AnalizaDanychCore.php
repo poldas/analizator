@@ -1,6 +1,6 @@
 <?php
-namespace App\Logika;
-use App\Logika\AnalizaDanychSql;
+namespace App\Logika\Analizator;
+use App\Logika\Analizator\AnalizaDanychSql;
 use Illuminate\Support\Facades\DB;
 
 abstract class AnalizaDanychCore implements AnalizaDanychSql {

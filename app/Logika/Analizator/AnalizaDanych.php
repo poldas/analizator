@@ -1,6 +1,8 @@
 <?php
-namespace App\Logika;
-use App\Logika\AnalizaDanychCore;
+namespace App\Logika\Analizator;
+use App\Logika\Analizator\AnalizaDanychCore;
+use App\Logika\Highchart;
+
 class AnalizaDanych extends AnalizaDanychCore {
 
     protected $dane_zmapowane = array();
@@ -65,7 +67,6 @@ class AnalizaDanych extends AnalizaDanychCore {
         $zadania = $this->pobierz_zadania_highchart();
         $czestosc = $this->pobierz_czestosc_highchart();
         $wynik = array_merge($srednia, $srednia_grupy, $czestosc, $zadania);
-        var_dump($wynik);
         return json_encode($wynik);
 
     }

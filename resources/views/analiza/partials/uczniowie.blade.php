@@ -1,8 +1,4 @@
-<h3>Uczniowie
-    <a href="{{ route('analiza.uczniowie.delete', ['id_analiza' =>  $analiza->id]) }}">usuń uczniów</a> |
-    <a href="#tabela-uczniowie" data-toggle="collapse">+/-</a>
-</h3>
-<div id="tabela-uczniowie" class="table-responsive collapse">
+<div id="tabela-uczniowie" class="table-responsive">
     <table id="dattab" class="table table-hover table-striped tablesorter">
         <thead>
         <tr>

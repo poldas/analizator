@@ -1,8 +1,4 @@
-<h3>Wyniki
-    <a href="{{ route('analiza.wyniki.delete', ['id_analiza' =>  $analiza->id]) }}">usuń wyniki</a> |
-    <a href="#tabela-wyniki" data-toggle="collapse">+/-</a>
-</h3>
-<div id="tabela-wyniki" class="table-responsive collapse">
+<div id="tabela-wyniki" class="table-responsive">
     <table class="table table-hover table-striped tablesorter">
         <thead>
         <tr>
