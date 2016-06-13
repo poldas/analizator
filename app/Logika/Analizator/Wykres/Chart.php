@@ -18,4 +18,9 @@ class Chart
     {
 
     }
+
+    public static function createChart($chardData)
+    {
+
+    }
 }

@@ -37,12 +37,11 @@ class ParseAnalizaFileData {
     protected function pobierzInfoUcznia(&$tablica_wiersz)
     {
         $kod_ucznia = array_shift($tablica_wiersz);
-        $lokalizacja = array_pop($tablica_wiersz);
-        $dysleksja = array_pop($tablica_wiersz);
         $plec = array_pop($tablica_wiersz);
+        $dysleksja = array_pop($tablica_wiersz);
+        $lokalizacja = array_pop($tablica_wiersz);
         $nr_ucznia = preg_replace("/[^0-9]/", '', $kod_ucznia);
         $klasa = preg_replace("/[0-9]/", '', $kod_ucznia);
-
         return [
             'updated_at' => time(),
             'id_analiza' => $this->analiza_id,
@@ -72,6 +71,9 @@ class ParseAnalizaFileData {
     public function generuj_wyniki_egzaminu() {
         $dane_zapytania_sql = $dane_zapytania_sql_uczniowie = [];
         foreach ($this->dane as $id => $tablica_wiersz) {
+            if(!$tablica_wiersz) {
+                continue;
+            }
             $info = $this->pobierzInfoUcznia($tablica_wiersz);
             $dane_zapytania_sql_uczniowie[] = $info;
             $this->dodajWyniki($dane_zapytania_sql, $tablica_wiersz, $info);

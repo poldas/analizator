@@ -13,6 +13,8 @@ use App\Wynik;
 use App\Analiza;
 use App\Uczen;
 use App\ParseAnalizaFileData;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 use Storage;
 use Illuminate\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\File;
@@ -43,8 +45,15 @@ class AnalizatorController extends Controller
 
     public function show($id)
     {
+        $daneWykresu = [];
+        if ( Session::has('daneWykresu')) {
+            $daneWykresu = Session::get('daneWykresu');
+        }
         list($analiza, $uczniowie) = $this->analizator->getTest($id);
-        return view('analiza.show', compact('analiza', 'uczniowie'));
+        if (!$analiza || !$uczniowie) {
+            return redirect('analiza/lista');
+        }
+        return view('analiza.show', compact('analiza', 'uczniowie', 'daneWykresu'));
     }
 
     public function konfiguruj($id)
@@ -55,8 +64,10 @@ class AnalizatorController extends Controller
 
     public function parsuj($id)
     {
-        $this->analizator->parseData($id);
-        return redirect('analiza/show/'.$id);
+        $daneWykresu = $this->analizator->parseData($id);
+//        return view('analiza.show', compact('daneWykresu'));
+        return response()->json($daneWykresu);
+        return redirect('analiza/wykresy/'.$id)->with('daneWykresu', $daneWykresu);
     }
 
     public function delete($id)

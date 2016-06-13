@@ -2,26 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Logika\AnalizaDanych;
+use App\Logika\Analizator\AnalizaDanych;
 use App\Wykres;
 use Illuminate\Database\QueryException;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
 
 class WykresyController extends Controller
 {
-    public function wykresy()
+    public function wykresy($id_analiza)
     {
-        $analiza = new AnalizaDanych();
-        $dane = $analiza->pobierz();
-        return view('analiza.wykresy', compact('dane'));
+//        $analiza = new AnalizaDanych();
+//        $dane = $analiza->pobierz();
+        $daneWykresu = [];
+        if (Session::has('daneWykresu')) {
+            $daneWykresu = Session::get('daneWykresu');
+        }
+        echo 'Analiza'.$id_analiza;
+        return view('analiza.wykresy', compact('daneWykresu'));
     }
 
     public function parsujDaneWykresu()
     {
         $analiza = new AnalizaDanych();
         $dane = $analiza->pobierz();
-        var_dump($dane);
     }
 
     protected function getWykresy()

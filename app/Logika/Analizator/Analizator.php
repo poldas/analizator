@@ -1,7 +1,6 @@
 <?php
 namespace App\Logika\Analizator;
 use App\Analiza;
-use App\Logika\Analizator\AnalizaDanych;
 use App\Obszar;
 use App\ParseAnalizaFileData;
 use App\Uczen;
@@ -53,22 +52,23 @@ class Analizator {
 
     public function parseData($data)
     {
-        $this->parsujDaneWykres($data);
+        return $this->parsujDaneWykres($data);
     }
 
     private function parsujDaneWykres($id)
     {
-        $analiza = new AnalizaDanych();
-        $dane = $analiza->pobierz();
-        var_dump($dane);
+        $analizator = new AnalizaHelpers();
+        $dane = $analizator->getChartsData($id);
+        return $dane;
     }
     public function getTest($testId)
     {
         $analiza = Analiza::find($testId);
         if (!$analiza) {
-            return redirect('analiza/lista');
+            return ['',''];
         }
-        $uczniowie = Uczen::where(['id_analiza' => $testId])->get();
+        $uczniowie = Uczen::where(['id_analiza' => $testId])
+            ->orderBy('nr_ucznia', 'ASC')->get();
         return [$analiza, $uczniowie];
     }
 

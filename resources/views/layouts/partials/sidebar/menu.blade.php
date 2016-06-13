@@ -9,7 +9,7 @@
         <ul class="treeview-menu">
             <li class="{{Helper::setActive('analiza/lista')}}"><a href="{{ route('analiza.lista') }}">Lista analiz</a></li>
             <li class="{{Helper::setActive('analiza/create')}}"><a href="{{ route('analiza.create') }}">Dodaj</a></li>
-            <li class="{{Helper::setActive('analiza/wykresy')}}"><a href="{{ route('analiza.wykresy') }}">Wykresy</a></li>
+            {{--<li class="{{Helper::setActive('analiza/wykresy')}}"><a href="{{ route('analiza.wykresy') }}">Wykresy</a></li>--}}
         </ul>
     </li>
 </ul><!-- /.sidebar-menu -->

@@ -33,7 +33,7 @@
                                         <td>
                                             <a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}">usuń</a> |
                                             <a href="{{ route('analiza.show', ['id' =>  $analiza->id]) }}">pokaż</a> |
-                                            <a href="{{ route('analiza.konfiguruj', ['id' =>  $analiza->id]) }}">konfiguruj</a>
+                                            <a href="{{ route('analiza.wykresy', ['id' =>  $analiza->id]) }}">wykresy</a>
                                         </td>
                                     </tr>
                                 @endforeach

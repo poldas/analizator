@@ -14,10 +14,20 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Zarzadzaj analizą: <b>{{ $analiza->nazwa }}</b></div>
                     @include('partials.flashmessage')
+
+                    <div class="panel-body">
+                        @if( !empty($daneWykresu) )
+                            <div class="alert alert-success alert-dismissable">
+                                @foreach($daneWykresu as $item)
+                                    {{ $item['name'] }}
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
                     <div class="panel-body">
                         <a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}">usuń</a> |
                         <a href="{{ route('analiza.konfiguruj', ['id' =>  $analiza->id]) }}">konfiguruj</a> |
-                        <a href="{{ route('analiza.parsuj', ['id' =>  $analiza->id]) }}">parsuj</a>
+                        <a href="{{ route('analiza.wykresy', ['id' =>  $analiza->id]) }}">wykresy</a>
 
                         <a href = "{{ route('analiza.show', ['id' =>  $analiza->id]) }}" class = "list-group-item">
                         <h4 class = "list-group-item-heading">

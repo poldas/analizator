@@ -24,7 +24,7 @@ class CreateWykresTable extends Migration
             $table->timestamps();
             $table->integer('id_analiza')->length(10)->unsigned();
 
-            $table->foreign('id_analiza')->references('id')->on('analiza');
+            $table->foreign('id_analiza')->references('id')->on('analiza')->onDelete('cascade');
             $table->unique(array('id_analiza', 'id_chart'));
         });
     }

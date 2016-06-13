@@ -13,7 +13,7 @@
 					<div class="panel-heading">Mieszkania</div>
 
 					<div class="panel-body">
-						lista mieszkań
+						lista mieszkań s
 					</div>
 				</div>
 			</div>

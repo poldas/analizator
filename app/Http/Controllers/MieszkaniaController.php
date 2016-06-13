@@ -10,6 +10,8 @@ class MieszkaniaController extends Controller
 {
     public function index()
     {
-        return view('mieszkania.mieszkania');
+        $viewData = [];
+        $viewData['list'] = [1,2,3,4,5];
+        return view('mieszkania.mieszkania', compact('viewData'));
     }
 }

@@ -19,7 +19,7 @@ class CreateTableWynikiEgzaminu extends Migration
             $table->string('nr_zadania');
             $table->float('liczba_punktow');
             $table->integer('max_punktow');
-            $table->foreign('id_analiza')->references('id')->on('analiza');
+            $table->foreign('id_analiza')->references('id')->on('analiza')->onDelete('cascade');
             $table->unique(array('id_analiza', 'klasa', 'kod_ucznia', 'nr_zadania'));
         });
     }

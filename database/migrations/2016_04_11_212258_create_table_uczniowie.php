@@ -22,7 +22,7 @@ class CreateTableUczniowie extends Migration
             $table->string('dysleksja');
             $table->string('lokalizacja');
             $table->timestamps();
-            $table->foreign('id_analiza')->references('id')->on('analiza');
+            $table->foreign('id_analiza')->references('id')->on('analiza')->onDelete('cascade');
             $table->unique(array('id_analiza', 'kod_ucznia'));
         });
     }

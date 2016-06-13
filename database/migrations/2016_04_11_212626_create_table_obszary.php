@@ -17,6 +17,7 @@ class CreateTableObszary extends Migration
             $table->string('obszar');
             $table->string('umiejetnosc');
             $table->string('nr_zadania');
+            $table->foreign('id_analiza')->references('id')->on('analiza')->onDelete('cascade');
             $table->unique(array('id_analiza', 'obszar', 'umiejetnosc', 'nr_zadania'));
         });
     }
