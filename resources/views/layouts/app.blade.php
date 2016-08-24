@@ -34,7 +34,7 @@ desired effect
 
     @include('layouts.partials.mainheader')
 
-    @include('layouts.partials.sidebar')
+    @include('layouts.partials.sidebar.menu')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

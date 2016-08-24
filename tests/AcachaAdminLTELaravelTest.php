@@ -1,16 +1,13 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Class AcachaAdminLTELaravelTest
+ * Class AcachaAdminLTELaravelTest.
  */
 class AcachaAdminLTELaravelTest extends TestCase
 {
-
     use DatabaseMigrations;
 
     /**
@@ -44,7 +41,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test Login Page
+     * Test Login Page.
      *
      * @return void
      */
@@ -55,7 +52,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test Login
+     * Test Login.
      *
      * @return void
      */
@@ -72,20 +69,22 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test Login
+     * Test Login.
      *
      * @return void
      */
     public function testLoginRequiredFields()
     {
         $this->visit('/login')
+            ->type('', 'email')
+            ->type('', 'password')
             ->press('Sign In')
             ->see('The email field is required')
             ->see('The password field is required');
     }
 
     /**
-     * Test Register Page
+     * Test Register Page.
      *
      * @return void
      */
@@ -96,7 +95,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test Password reset Page
+     * Test Password reset Page.
      *
      * @return void
      */
@@ -107,7 +106,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test home page is only for authorized Users
+     * Test home page is only for authorized Users.
      *
      * @return void
      */
@@ -118,7 +117,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test home page works with Authenticated Users
+     * Test home page works with Authenticated Users.
      *
      * @return void
      */
@@ -132,7 +131,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test log out
+     * Test log out.
      *
      * @return void
      */
@@ -146,7 +145,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test 404 Error page
+     * Test 404 Error page.
      *
      * @return void
      */
@@ -158,7 +157,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test user registration
+     * Test user registration.
      *
      * @return void
      */
@@ -167,18 +166,17 @@ class AcachaAdminLTELaravelTest extends TestCase
         $this->visit('/register')
             ->type('Sergi Tur Badenas', 'name')
             ->type('sergiturbadenas@gmail.com', 'email')
-//            ->check('terms') TODO
+            ->check('terms')
             ->type('passw0RD', 'password')
             ->type('passw0RD', 'password_confirmation')
             ->press('Register')
             ->seePageIs('/home')
             ->seeInDatabase('users', ['email' => 'sergiturbadenas@gmail.com',
-                                      'name'  => 'Sergi Tur Badenas']);
-
+                                      'name'  => 'Sergi Tur Badenas', ]);
     }
 
     /**
-     * Test required fields on registration page
+     * Test required fields on registration page.
      *
      * @return void
      */
@@ -192,7 +190,7 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test send password reset
+     * Test send password reset.
      *
      * @return void
      */
@@ -205,8 +203,9 @@ class AcachaAdminLTELaravelTest extends TestCase
             ->press('Send Password Reset Link')
             ->see('We have e-mailed your password reset link!');
     }
+
     /**
-     * Test send password reset user not exists
+     * Test send password reset user not exists.
      *
      * @return void
      */
@@ -217,6 +216,4 @@ class AcachaAdminLTELaravelTest extends TestCase
             ->press('Send Password Reset Link')
             ->see('There were some problems with your input');
     }
-
-
 }

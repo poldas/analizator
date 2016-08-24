@@ -12,8 +12,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading"></div>
-
+                    <div class="panel-heading">Wykresy <a href="{{ route('analiza.show', ['id' => $id_analiza]) }}">Panel sterowania</a></div>
                     <div class="panel-body">
                         <div id="wykres" class="wykres-area"></div>
                     </div>
@@ -55,7 +54,7 @@
                     enabled: true
                 },
                 tooltip: {
-                    headerFormat: '<span style="font-size:10px">Klasa {point.key}</span><table>',
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
                     '<td style="padding:0"><b>{point.y:.2f}</b></td></tr>',
                     footerFormat: '</table>',
@@ -81,10 +80,8 @@
                 method: "POST",
             }).done(function(dane) {
                 dane.forEach(function(elem) {
-                    console.log(elem);
                     var newElement = document.createElement('div');
                     newElement.style.className = 'wykres';
-                    console.log(newElement);
                     initCharts(newElement, elem);
                     wykresArea.append(newElement);
                 })

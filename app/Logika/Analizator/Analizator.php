@@ -58,6 +58,9 @@ class Analizator {
     private function parsujDaneWykres($id)
     {
         $analizator = new AnalizaHelpers();
+        $analizator->addChartsData($id, AnalizaHelpers::TYP_SREDNIA);
+//            ->addChartsData($id, AnalizaHelpers::TYP_SREDNIA_PKT);
+
         $dane = $analizator->getChartsData($id);
         return $dane;
     }

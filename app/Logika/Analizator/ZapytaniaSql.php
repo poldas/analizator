@@ -4,7 +4,7 @@ class ZapytaniaSql {
 
     const SREDNIA_CALOSC_KLASA = "
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 ON u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -17,14 +17,13 @@ class ZapytaniaSql {
                 ON u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
             WHERE we.id_analiza = ?
             GROUP by u.klasa
-            
-            ORDER BY LENGTH(klasa) DESC, klasa
+            ORDER BY klasa
     ";
 
     const SREDNIA_CALOSC_KLASA_DYSLEKSJA = "
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 u.dysleksja,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 ON u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -40,13 +39,13 @@ class ZapytaniaSql {
             WHERE we.id_analiza = ?
             GROUP BY u.dysleksja, we.klasa
             
-            ORDER BY LENGTH(klasa) DESC, klasa
+            ORDER BY klasa
     ";
 
     const SREDNIA_CALOSC_KLASA_LOKALIZACJA = "
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 u.lokalizacja,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 ON u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -62,7 +61,7 @@ class ZapytaniaSql {
             WHERE we.id_analiza = ?
             GROUP BY u.lokalizacja, we.klasa
             
-            ORDER BY LENGTH(klasa) DESC, klasa
+            ORDER BY klasa
     ";
 
     const SREDNIA_CALOSC_KLASA_PLEC = "
@@ -84,7 +83,7 @@ class ZapytaniaSql {
             WHERE we.id_analiza = ?
             GROUP BY u.plec, we.klasa
             
-            ORDER BY LENGTH(klasa) DESC, klasa
+            ORDER BY klasa
     ";
 
     const UNION_ALL_SREDNIA = "
@@ -198,7 +197,7 @@ class ZapytaniaSql {
           select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 we.nr_zadania,
                 u.dysleksja,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 ON u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -221,7 +220,7 @@ class ZapytaniaSql {
           select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 we.nr_zadania,
                 u.lokalizacja,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 ON u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -244,7 +243,7 @@ class ZapytaniaSql {
           select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 we.nr_zadania,
                 u.plec,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 ON u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -361,7 +360,7 @@ class ZapytaniaSql {
     const SREDNIA_OBSZAR_CALOSC = "
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 o.obszar,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -379,14 +378,15 @@ class ZapytaniaSql {
             left join obszary as o
                 on o.nr_zadania = we.nr_zadania AND we.id_analiza = u.id_analiza
             WHERE we.id_analiza = ?
-             GROUP by o.obszar, we.klasa
+            GROUP by o.obszar, we.klasa
+            ORDER BY klasa
     ";
 
     const SREDNIA_OBSZAR_DYSLEKSJA = "
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 o.obszar,
                 u.dysleksja,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -405,14 +405,15 @@ class ZapytaniaSql {
             left join obszary as o
                 on o.nr_zadania = we.nr_zadania AND we.id_analiza = u.id_analiza
             WHERE we.id_analiza = ?
-             GROUP by o.obszar, we.klasa, u.dysleksja
+            GROUP by o.obszar, we.klasa, u.dysleksja
+            ORDER BY klasa
     ";
 
     const SREDNIA_OBSZAR_LOKALIZACJA = "
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 o.obszar,
                 u.lokalizacja,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 ON u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -431,14 +432,15 @@ class ZapytaniaSql {
             left join obszary as o
                 on o.nr_zadania = we.nr_zadania AND we.id_analiza = u.id_analiza
             WHERE we.id_analiza = ?
-             GROUP by o.obszar, we.klasa, u.lokalizacja
+            GROUP by o.obszar, we.klasa, u.lokalizacja
+            ORDER BY klasa
     ";
 
     const SREDNIA_OBSZAR_PLEC = "
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 o.obszar,
                 u.plec,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -457,7 +459,8 @@ class ZapytaniaSql {
             left join obszary as o
                 on o.nr_zadania = we.nr_zadania AND we.id_analiza = u.id_analiza
             WHERE we.id_analiza = ?
-             GROUP by o.obszar, we.klasa, u.plec
+            GROUP by o.obszar, we.klasa, u.plec
+            ORDER BY klasa
     ";
 
 
@@ -467,7 +470,7 @@ class ZapytaniaSql {
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 o.obszar,
                 o.umiejetnosc,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -491,7 +494,7 @@ class ZapytaniaSql {
             select sum(we.liczba_punktow)/sum(we.max_punktow) as srednia_punktow,
                 o.obszar,
                 'cała umiejętność' umiejetnosc,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -510,7 +513,7 @@ class ZapytaniaSql {
             left join obszary as o
                 on o.nr_zadania = we.nr_zadania AND we.id_analiza = u.id_analiza
             WHERE we.id_analiza = ?
-             GROUP by o.obszar, we.klasa
+            GROUP by o.obszar, we.klasa
     ";
 
     const SREDNIA_OBSZAR_UMIEJETNOSC_DYSLEKSJA = "
@@ -518,7 +521,7 @@ class ZapytaniaSql {
                 o.obszar,
                 u.dysleksja,
                 'cała umiejętność' umiejetnosc,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -544,7 +547,7 @@ class ZapytaniaSql {
                 o.obszar,
                 u.dysleksja,
                 o.umiejetnosc,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -572,7 +575,7 @@ class ZapytaniaSql {
                 o.obszar,
                 u.lokalizacja,
                 'cała umiejętność' umiejetnosc,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -598,7 +601,7 @@ class ZapytaniaSql {
                 o.obszar,
                 u.lokalizacja,
                 o.umiejetnosc,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -626,7 +629,7 @@ class ZapytaniaSql {
                 o.obszar,
                 u.plec,
                 'cała umiejętność' umiejetnosc,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -652,7 +655,7 @@ class ZapytaniaSql {
                 o.obszar,
                 u.plec,
                 o.umiejetnosc,
-                'szkoła' klasa
+                'szkola' klasa
             from wyniki_egzaminu as we
             left join uczniowie as u
                 on u.kod_ucznia = we.kod_ucznia AND we.id_analiza = u.id_analiza
@@ -962,11 +965,11 @@ class ZapytaniaSql {
                     group by w.kod_ucznia, u.klasa
                     ) as b
             group by b.suma, b.dysleksja, b.klasa
-            ORDER BY klasa, suma
+            ORDER BY suma, dysleksja, klasa
     ";
 
     const CZESTOSC_WYNIKOW_LOKALIZACJA = "
-        select count(1) as ilosc_wynikow,
+            select count(1) as ilosc_wynikow,
                 b.suma,
                 b.lokalizacja,
                 'szkola' klasa
@@ -996,7 +999,7 @@ class ZapytaniaSql {
                     group by w.kod_ucznia, u.klasa
                     ) as b
             group by b.suma, b.lokalizacja, b.klasa
-            ORDER BY klasa, suma
+            ORDER BY klasa, suma, lokalizacja
     ";
 
     const CZESTOSC_WYNIKOW_PLEC = "
@@ -1029,8 +1032,8 @@ class ZapytaniaSql {
                     WHERE w.id_analiza = ?
                     group by w.kod_ucznia, u.klasa
                     ) as b
-            group by b.suma, b.plec, b.klasa
-            ORDER BY klasa, suma
+            group by b.suma, b.klasa, b.plec
+            ORDER BY ilosc_wynikow, klasa, plec
     ";
 
     const UNION_CZESTOSC_WYNIKOW = "

@@ -19,8 +19,7 @@ class WykresyController extends Controller
         if (Session::has('daneWykresu')) {
             $daneWykresu = Session::get('daneWykresu');
         }
-        echo 'Analiza'.$id_analiza;
-        return view('analiza.wykresy', compact('daneWykresu'));
+        return view('analiza.wykresy', compact('daneWykresu', 'id_analiza'));
     }
 
     public function parsujDaneWykresu()
