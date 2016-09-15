@@ -5,14 +5,17 @@
 @endsection
 
 @section('contentheader_title')
-    zarządzaj
+
 @endsection
 @section('main-content')
     <div class="container spark-screen">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Zarzadzaj analizą: <b>{{ $analiza->nazwa }}</b></div>
+                    <div class="panel-heading">
+                        <h1>Zarzadzaj analizą: <b>{{ $analiza->nazwa }}</b></h1>
+                    </div>
+
                     @include('partials.flashmessage')
 
                     <div class="panel-body">
@@ -25,9 +28,10 @@
                         @endif
                     </div>
                     <div class="panel-body">
-                        <a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}">usuń</a> |
+                        <a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}">usuń wszystko</a> |
                         <a href="{{ route('analiza.konfiguruj', ['id' =>  $analiza->id]) }}">konfiguruj</a> |
-                        <a href="{{ route('analiza.wykresy', ['id' =>  $analiza->id]) }}">wykresy</a>
+                        <a href="{{ route('analiza.wykresy', ['id' =>  $analiza->id]) }}">wykresy</a> |
+                        <a href="{{ route('analiza.delete', ['id' =>  $analiza->id, 'onlyData' => 1]) }}">usuń tylko dane</a>
 
                         <a href = "{{ route('analiza.show', ['id' =>  $analiza->id]) }}" class = "list-group-item">
                         <h4 class = "list-group-item-heading">

@@ -2,6 +2,7 @@
     <table id="dattab" class="table table-hover table-striped tablesorter">
         <thead>
         <tr>
+            <th class="header">L.p.</th>
             <th class="header headerSortUp">nr ucznia</th>
             <th class="header">kod ucznia</th>
             <th class="header">klasa</th>
@@ -13,6 +14,7 @@
         <tbody>
         @foreach($uczniowie as $uczen)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $uczen->nr_ucznia }}</td>
                 <td>{{ $uczen->kod_ucznia }}</td>
                 <td>{{ $uczen->klasa }}</td>

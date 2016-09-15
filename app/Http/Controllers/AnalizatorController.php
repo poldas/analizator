@@ -8,17 +8,14 @@
 namespace App\Http\Controllers;
 
 use App\Logika\Analizator\Analizator;
-use App\Obszar;
-use App\Wynik;
 use App\Analiza;
-use App\Uczen;
 use App\ParseAnalizaFileData;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Storage;
 use Illuminate\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\File;
-use Illuminate\Database\QueryException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class HomeController
@@ -39,7 +36,7 @@ class AnalizatorController extends Controller
 
     public function lista()
     {
-        $analizy = $this->analizator->getAll();
+        $analizy = $this->analizator->getAllAnalize();
         return view('analiza.lista', compact('analizy'));
     }
 
@@ -49,7 +46,7 @@ class AnalizatorController extends Controller
         if ( Session::has('daneWykresu')) {
             $daneWykresu = Session::get('daneWykresu');
         }
-        list($analiza, $uczniowie) = $this->analizator->getTest($id);
+        list($analiza, $uczniowie) = $this->analizator->getAnalizeById($id);
         if (!$analiza || !$uczniowie) {
             return redirect('analiza/lista');
         }
@@ -70,9 +67,25 @@ class AnalizatorController extends Controller
         return redirect('analiza/wykresy/'.$id)->with('daneWykresu', $daneWykresu);
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
-        $this->analizator->deleteDataSet($id);
+        if ($request->has('onlyData') ) {
+            $this->analizator->wynikiDelete($id);
+            $this->analizator->obszarDelete($id);
+            $this->analizator->uczniowieDelete($id);
+        } else {
+            $analiza = Analiza::where('id', $id)->first();
+            $i = Storage::disk('local')->delete($analiza->file_path)
+                && $analiza->delete();
+            if ($i) {
+                $type = 'alert-success';
+                $message = "Udało się usunąć ".$analiza->file_path;
+            } else {
+                $type = 'alert-danger';
+                $message = "Nie udało się usunąć ".$analiza->file_path;
+            }
+            request()->session()->put($type, $message);
+        }
         return redirect('analiza/lista');
     }
 
@@ -117,7 +130,7 @@ class AnalizatorController extends Controller
                 ->withErrors($e->getMessage())
                 ->withInput();
         }
-        $this->analizator->createDataSet($request);
+        $this->analizator->createDataSetFromRequest($request);
         return  redirect('analiza/lista');
     }
 }

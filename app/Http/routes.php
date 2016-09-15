@@ -12,6 +12,7 @@
 */
 
 Route::get('/landing', ['as' => 'main', 'uses' =>'LandingPageController@index']);
+Route::get('/', ['as' => 'index', 'uses' =>'HomeController@index']);
 
 
 
@@ -31,13 +32,20 @@ Route::get('/mieszkania', ['as' => 'mieszkania.index', 'uses' =>'MieszkaniaContr
 /* Routing do projektu Analizator */
 Route::get('/analiza/create', ['as' => 'analiza.create', 'uses' =>'AnalizatorController@createForm']);
 Route::post('/analiza/store', ['as' => 'analiza.store', 'uses' =>'AnalizatorController@createNew']);
-Route::get('/analiza/delete/{id}', ['as' => 'analiza.delete', 'uses' =>'AnalizatorController@delete']);
-Route::get('/analiza/show/{id}', ['as' => 'analiza.show', 'uses' =>'AnalizatorController@show']);
 Route::get('/analiza/konfiguruj/{id}', ['as' => 'analiza.konfiguruj', 'uses' =>'AnalizatorController@konfiguruj']);
+
 Route::get('/analiza/parsuj/{id}', ['as' => 'analiza.parsuj', 'uses' =>'AnalizatorController@parsuj']);
 Route::post('/analiza/parsuj/{id}', ['as' => 'analiza.parsuj', 'uses' =>'AnalizatorController@parsuj']);
 
+Route::get('/analiza/delete/{id}', ['as' => 'analiza.delete', 'uses' =>'AnalizatorController@delete']);
+
+Route::get('/analiza/show/{id}', ['as' => 'analiza.show', 'uses' =>'AnalizatorController@show']);
+
 Route::get('/analiza/lista', ['as' => 'analiza.lista', 'uses' =>'AnalizatorController@lista']);
+
+
+
+
 Route::get('/analiza/wykresy/{id_analiza}', ['as' => 'analiza.wykresy', 'uses' =>'WykresyController@wykresy']);
 Route::post('/analiza/wykresy/{id_analiza}', ['as' => 'analiza.wykresy.post', 'uses' =>'WykresyController@wykresy']);
 

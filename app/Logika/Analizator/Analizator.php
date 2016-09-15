@@ -1,10 +1,11 @@
 <?php
 namespace App\Logika\Analizator;
+
 use App\Analiza;
 use App\Obszar;
-use App\ParseAnalizaFileData;
 use App\Uczen;
 use App\Wynik;
+use App\Logika\Analizator\ParseDataSource;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,20 +13,28 @@ class Analizator {
 
     public function konfiguruj($id)
     {
-        $this->addTest($id);
+        $analiza = Analiza::find($id);
+        $dataSource = $this->getDataSourceFromFile($analiza->file_path);
+        $parser = new ParseDataSource();
+        $parser->setAnalizaId($id)
+            ->setDataToParse($dataSource);
+        $parser->parse();
+
+        $this->addDataToDB($parser);
     }
 
-    public function getAll()
+    public function getAllAnalize()
     {
         $analizy = Analiza::all();
         return $analizy;
     }
 
-    public function createDataSet($request)
+    public function createDataSetFromRequest($request)
     {
-        $request['file_path'] = $request->file('file')->getClientOriginalName();
-        $analiza = $this->addNewAnaliza($request);
-        $this->addFile($request, $analiza);
+        $storage = new SaveDataSource();
+        $file = $request->file('file');
+        $request['file_path'] = $file->getClientOriginalName();
+        $storage->save($request->all(), $file);
         request()->session()->put('alert-success', 'Dane zapisane');
     }
 
@@ -44,18 +53,8 @@ class Analizator {
         request()->session()->put($type, $message);
     }
 
-    public function addTest($newTestData)
-    {
-        $analiza = Analiza::find($newTestData);
-        $this->addWyniki($analiza );
-    }
 
-    public function parseData($data)
-    {
-        return $this->parsujDaneWykres($data);
-    }
-
-    private function parsujDaneWykres($id)
+    public function parseData($id)
     {
         $analizator = new AnalizaHelpers();
         $analizator->addChartsData($id, AnalizaHelpers::TYP_SREDNIA);
@@ -64,7 +63,8 @@ class Analizator {
         $dane = $analizator->getChartsData($id);
         return $dane;
     }
-    public function getTest($testId)
+
+    public function getAnalizeById($testId)
     {
         $analiza = Analiza::find($testId);
         if (!$analiza) {
@@ -76,17 +76,10 @@ class Analizator {
     }
 
 
-    private function addWyniki(Analiza $analiza)
-    {
-        $dataSource = $this->getDataSource($analiza);
-        $parser = $this->parseDataSource($dataSource, $analiza->id);
-        $this->addDataToDB($parser);
-    }
-
-    private function getDataSource(Analiza $analiza)
+    private function getDataSourceFromFile($file_path)
     {
         try {
-            $csvStringData = Storage::get($analiza->file_path);
+            $csvStringData = Storage::get($file_path);
             $csvData = explode("\n", $csvStringData);
             $csvData = array_map('str_getcsv', $csvData);
         } catch (Illuminate\Filesystem\FileNotFoundException $exception) {
@@ -96,16 +89,7 @@ class Analizator {
         return $csvData;
     }
 
-    private function parseDataSource($dataSource, $analiza_id)
-    {
-        $parser = new ParseAnalizaFileData(['analiza_id' => $analiza_id]);
-        $parser->parsuj_dane($dataSource);
-        $parser->generuj_wyniki_egzaminu();
-        $parser->generuj_obszary();
-        return $parser;
-    }
-
-    private function addDataToDB(ParseAnalizaFileData $parser)
+    private function addDataToDB(ParseDataSource $parser)
     {
         try {
             Obszar::insert($parser->dane_obszar);
@@ -127,31 +111,12 @@ class Analizator {
         }
     }
 
-    private function addFile($request,Analiza $analiza) {
-        $isOk = Storage::disk('local')->put($analiza->file_path,
-            file_get_contents($request->file('file')->getRealPath())
-        );
-
-        return $isOk;
-    }
-
-    private function addNewAnaliza($request)
-    {
-        $analiza = Analiza::create($request->all());
-        $analiza->file_path = 'analiza_csv/'.$analiza->id.'-'.preg_replace("/\s/", '_', $analiza->file_path);
-        $analiza->save();
-
-        return $analiza;
-    }
-
-
-
     public function obszarDelete($id_analiza)
     {
         $i = Obszar::where('id_analiza', $id_analiza)->delete();
         if ($i) {
             $type = 'alert-success';
-            $message = "Udało się usunąć obszary dla analizy o id: ".$id_analiza;
+            $message = "Obszary dla analizy o id: ".$id_analiza;
         } else {
             $type = 'alert-danger';
             $message = "Nie udało się usunąć obszary dla analizy o id: ".$id_analiza;
@@ -165,7 +130,7 @@ class Analizator {
         $i = Wynik::where('id_analiza', $id_analiza)->delete();
         if ($i) {
             $type = 'alert-success';
-            $message = "Udało się usunąć wyniki dla analizy o id: ".$id_analiza;
+            $message = "Wyniki dla analizy o id: ".$id_analiza;
         } else {
             $type = 'alert-danger';
             $message = "Nie udało się usunąć wyniki dla analizy o id: ".$id_analiza;
@@ -178,7 +143,7 @@ class Analizator {
         $i = Uczen::where('id_analiza', $id_analiza)->delete();
         if ($i) {
             $type = 'alert-success';
-            $message = "Udało się usunąć uczniów dla analizy o id: ".$id_analiza;
+            $message = "Uczniowie uczniów dla analizy o id: ".$id_analiza;
         } else {
             $type = 'alert-danger';
             $message = "Nie udało się usunąć uczniów dla analizy o id: ".$id_analiza;
