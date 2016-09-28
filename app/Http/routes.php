@@ -11,8 +11,17 @@
 |
 */
 
+Route::get('redirect', function() {
+    redirect('done');
+});
+Route::get('done', function() {
+return 'redirection complete';
+});
+
+
 Route::get('/landing', ['as' => 'main', 'uses' =>'LandingPageController@index']);
 Route::get('/', ['as' => 'index', 'uses' =>'HomeController@index']);
+Route::get('/home', ['as' => 'home', 'uses' =>'HomeController@home']);
 
 
 

@@ -2,6 +2,9 @@
 namespace App\Logika\Analizator;
 
 use App\Analiza;
+use App\Logika\Analizator\Wykres\ChartBuilder;
+use App\Logika\Analizator\Wykres\ChartDirector;
+use App\Logika\Analizator\Wykres\Parsers\Parser;
 use App\Obszar;
 use App\Uczen;
 use App\Wynik;
@@ -11,12 +14,12 @@ use Illuminate\Support\Facades\Storage;
 
 class Analizator {
 
-    public function konfiguruj($id)
+    public function addData($id_analiza)
     {
-        $analiza = Analiza::find($id);
+        $analiza = Analiza::find($id_analiza);
         $dataSource = $this->getDataSourceFromFile($analiza->file_path);
         $parser = new ParseDataSource();
-        $parser->setAnalizaId($id)
+        $parser->setAnalizaId($id_analiza)
             ->setDataToParse($dataSource);
         $parser->parse();
 
@@ -34,7 +37,8 @@ class Analizator {
         $storage = new SaveDataSource();
         $file = $request->file('file');
         $request['file_path'] = $file->getClientOriginalName();
-        $storage->save($request->all(), $file);
+        $savedAnaliza = $storage->save($request->all(), $file);
+        $this->addData($savedAnaliza->id);
         request()->session()->put('alert-success', 'Dane zapisane');
     }
 
@@ -56,9 +60,18 @@ class Analizator {
 
     public function parseData($id)
     {
+        $chartDirector = new ChartDirector();
+        $chartDirector->setId($id);
+//        $chartDirector->addToRender(Parser::TYP_OBSZAR);
+//        $chartDirector->addToRender(Parser::TYP_CZESTOSC);
+        $chartDirector->addToRender(Parser::TYP_SREDNIA);
+//        $chartDirector->addToRender(Parser::TYP_ZADANIE);
+        $dane = $chartDirector->getCharts();
+        dd();
+        return $dane;
+
         $analizator = new AnalizaHelpers();
-        $analizator->addChartsData($id, AnalizaHelpers::TYP_SREDNIA);
-//            ->addChartsData($id, AnalizaHelpers::TYP_SREDNIA_PKT);
+        $analizator->addChartsData($id, AnalizaHelpers::TYP_OBSZAR);
 
         $dane = $analizator->getChartsData($id);
         return $dane;
@@ -93,19 +106,19 @@ class Analizator {
     {
         try {
             Obszar::insert($parser->dane_obszar);
-            request()->session()->put('alert-success', 'Obszary zapisane.');
+            request()->session()->put('success-messages', 'Obszary zapisane.');
         } catch(QueryException $e) {
             request()->session()->put('alert-danger', 'Błąd w zapisie danych obszaru.');
         }
         try {
             Wynik::insert($parser->dane_wyniki_egzaminu);
-            request()->session()->put('alert-success', 'Wyniki zapisane.');
+            request()->session()->put('success-messages', 'Wyniki zapisane.');
         } catch(QueryException $e) {
             request()->session()->put('alert-danger', 'Błąd w zapisie danych wyników.');
         }
         try {
             Uczen::insert($parser->dane_uczniowie);
-            request()->session()->put('alert-success', 'Uczniowie zapisani.');
+            request()->session()->put('success-messages', 'Uczniowie zapisani.');
         } catch(QueryException$e) {
             request()->session()->put('alert-danger', 'Błąd w zapisie danych uczniów.');
         }

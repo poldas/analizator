@@ -3,12 +3,12 @@
         <thead>
         <tr>
             <th class="header">L.p.</th>
-            <th class="header headerSortUp">nr ucznia</th>
-            <th class="header">kod ucznia</th>
-            <th class="header">klasa</th>
-            <th class="header">płeć</th>
-            <th class="header">dysleksja</th>
-            <th class="header">lokalizacja</th>
+            <th class="header headerSortUp">Nr ucznia</th>
+            <th class="header">Kod ucznia</th>
+            <th class="header">Klasa</th>
+            <th class="header">Płeć</th>
+            <th class="header">Dysleksja</th>
+            <th class="header">Lokalizacja</th>
         </tr>
         </thead>
         <tbody>

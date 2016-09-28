@@ -1,13 +1,13 @@
 <?php
+namespace App\Logika\Analizator\Wykres;
+class Chart {
 
-/**
- * Created by PhpStorm.
- * User: poldas
- * Date: 09.05.16
- * Time: 20:55
- */
-class Chart
-{
+    private $name;
+    private $tags = [];
+    private $series = [];
+    private $xNameAxis;
+    private $yNameAxis;
+    private $categories = [];
 
     public function addChart()
     {

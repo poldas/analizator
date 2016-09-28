@@ -35,34 +35,12 @@ class ParseDataSource {
         if(!$this->checkIsValidEntryData()) {
             throw new \Exception('Brakuje danych do parsowania.');
         }
+        $this->prepareHeaderData(); // przyotowuje dane z nagłówka csv, ilość i nazwy zadań obszarów, umiejętności
         $this->prepareAnalizaData(); // przygotowuje dane do tabeli wyników i uczniów
         $this->prepareObszarData(); // przygotowuje dane do tabeli obszarów
         if(!$this->checkIsValidParsedData()) {
             throw new \Exception('Błędnie sparsowane dane.');
         }
-    }
-
-    private function checkIsValidEntryData()
-    {
-        return is_array($this->csvDataToParse) && !empty($this->analiza_id);
-    }
-
-    private function checkIsValidParsedData()
-    {
-        $isCount = count($this->nazwy_obszarow) == count($this->nazwy_punktow)
-            && count($this->nazwy_punktow) == count($this->nazwy_zadan);
-
-        if (!$isCount) {
-            throw new \Exception('nie zgadzają się limity obszarów, punktów i zadan.');
-        }
-        $ilosc_uczniow = count($this->students);
-        $ilosc_zadan = count($this->nazwy_zadan);
-        $ilosc_wierszy = count($this->dane_wyniki_egzaminu);
-        $isMultiply = $ilosc_wierszy == $ilosc_uczniow * $ilosc_zadan;
-        if (!$isMultiply) {
-            throw new \Exception('nie zgadza się liczba uczniów, zadań i ilości wynków.');
-        }
-        return $isCount && $isMultiply;
     }
 
     /**
@@ -87,20 +65,6 @@ class ParseDataSource {
                 throw new \Exception('niepoprawny parametr w zadanie, obszar umiejętność, punkty '.$item);
             }
         }
-    }
-
-    /**
-     * Pobiera tylko dane odnośnie punktów z wiersza danych csv.
-     * Pomija kod ucznia (pierwszy element) i 3 ostatnie dyslekcję, płeć, lokalizację.
-     *
-     * @param array $arr
-     * @return array
-     */
-    private function cutArray($rowData)
-    {
-        array_shift($rowData); // pierwszy element wiersza, to string, nie zawiera się on w danych analizy
-        array_splice($rowData, -3, 3); // trzy ostatnie elementy wiersza danych odpowiadają za lokalizacje, dysleksje, płeć
-        return $rowData;
     }
 
     /**
@@ -166,18 +130,6 @@ class ParseDataSource {
                 'max_punktow' => $this->nazwy_punktow[$pozycja]
             ];
         }
-    }
-
-    /**
-     * Pobiera tylko dane wyników egzaminu.
-     * Pomija pierwszy element i bierze tyle elementów ile było zadań.
-     *
-     * @param array $analizaRow
-     * @return mixed
-     */
-    private function getExamDataFromRow($analizaRow)
-    {
-        return array_slice($analizaRow, 1, count($this->nazwy_zadan));
     }
 
     /**
@@ -254,6 +206,55 @@ class ParseDataSource {
         // 4 pierwsze elementy, to dane dla zadań, obszarów, umiejętności, maksymalnej liczby punktów, pozostałe to dane
         return array_slice($this->csvDataToParse, 4);
     }
+
+    /**
+     * Pobiera tylko dane wyników egzaminu.
+     * Pomija pierwszy element i bierze tyle elementów ile było zadań.
+     *
+     * @param array $analizaRow
+     * @return mixed
+     */
+    private function getExamDataFromRow($analizaRow)
+    {
+        return array_slice($analizaRow, 1, count($this->nazwy_zadan));
+    }
+
+    /**
+     * Pobiera tylko dane odnośnie punktów z wiersza danych csv.
+     * Pomija kod ucznia (pierwszy element) i 3 ostatnie dyslekcję, płeć, lokalizację.
+     *
+     * @param array $arr
+     * @return array
+     */
+    private function cutArray($rowData)
+    {
+        array_shift($rowData); // pierwszy element wiersza, to string, nie zawiera się on w danych analizy
+        array_splice($rowData, -3, 3); // trzy ostatnie elementy wiersza danych odpowiadają za lokalizacje, dysleksje, płeć
+        return $rowData;
+    }
+
+    private function checkIsValidEntryData()
+    {
+        return is_array($this->csvDataToParse) && !empty($this->analiza_id);
+    }
+
+    private function checkIsValidParsedData()
+    {
+        $isCount = count($this->nazwy_obszarow) == count($this->nazwy_punktow)
+            && count($this->nazwy_punktow) == count($this->nazwy_zadan);
+        if (!$isCount) {
+            throw new \Exception('nie zgadzają się limity obszarów, punktów i zadan.');
+        }
+        $ilosc_uczniow = count($this->students);
+        $ilosc_zadan = count($this->nazwy_zadan);
+        $ilosc_wierszy = count($this->dane_wyniki_egzaminu);
+        $isMultiply = $ilosc_wierszy == $ilosc_uczniow * $ilosc_zadan;
+        if (!$isMultiply) {
+            throw new \Exception('nie zgadza się liczba uczniów, zadań i ilości wynków.');
+        }
+        return $isCount && $isMultiply;
+    }
+
 
     /**
      * Pobiera dane nagłówka z danych csv, bez wyników egzaminu

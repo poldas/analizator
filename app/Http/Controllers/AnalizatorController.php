@@ -55,16 +55,15 @@ class AnalizatorController extends Controller
 
     public function konfiguruj($id)
     {
-        $this->analizator->konfiguruj($id);
+        $this->analizator->addData($id);
         return redirect('analiza/show/'.$id);
     }
 
     public function parsuj($id)
     {
         $daneWykresu = $this->analizator->parseData($id);
-//        return view('analiza.show', compact('daneWykresu'));
         return response()->json($daneWykresu);
-        return redirect('analiza/wykresy/'.$id)->with('daneWykresu', $daneWykresu);
+//        return redirect('analiza/wykresy/'.$id)->with('daneWykresu', $daneWykresu);
     }
 
     public function delete(Request $request, $id)
@@ -79,14 +78,14 @@ class AnalizatorController extends Controller
                 && $analiza->delete();
             if ($i) {
                 $type = 'alert-success';
-                $message = "Udało się usunąć ".$analiza->file_path;
+                $message = "Plik ".$analiza->file_path." i dane zostały usunięte.";
             } else {
                 $type = 'alert-danger';
                 $message = "Nie udało się usunąć ".$analiza->file_path;
             }
             request()->session()->put($type, $message);
         }
-        return redirect('analiza/lista');
+        return redirect('analiza/show/'.$id);
     }
 
     public function obszarDelete($id_analiza)

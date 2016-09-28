@@ -14,8 +14,9 @@ class CreateTableAnaliza extends Migration
     {
         Schema::create('analiza', function (Blueprint $table) {
             $table->increments('id')->length(10)->unsigned();
-            $table->string('nazwa');
-            $table->string('file_path');
+            $table->string('nazwa', 50);
+            $table->string('file_path', 150);
+            $table->char('status', 5);
             $table->timestamps();
 
         });

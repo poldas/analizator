@@ -7,38 +7,44 @@
 @section('contentheader_title')
 
 @endsection
+@section('layouts_partials_contentheader')
+    @include('analiza.partials.singleanalizamenu', ['menu' => [], 'analiza' => $analiza])
+@endsection
+
 @section('main-content')
     <div class="container spark-screen">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h1>Zarzadzaj analizą: <b>{{ $analiza->nazwa }}</b></h1>
+                        <h1><b>{{ $analiza->nazwa }}</b></h1>
+                        <em>dodano: {{ $analiza->created_at }}</em>
                     </div>
-
                     @include('partials.flashmessage')
-
-                    <div class="panel-body">
-                        @if( !empty($daneWykresu) )
+                    @if( !empty($daneWykresu) )
+                        <div class="panel-body">
                             <div class="alert alert-success alert-dismissable">
                                 @foreach($daneWykresu as $item)
                                     {{ $item['name'] }}
                                 @endforeach
                             </div>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                     <div class="panel-body">
-                        <a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}">usuń wszystko</a> |
-                        <a href="{{ route('analiza.konfiguruj', ['id' =>  $analiza->id]) }}">konfiguruj</a> |
-                        <a href="{{ route('analiza.wykresy', ['id' =>  $analiza->id]) }}">wykresy</a> |
-                        <a href="{{ route('analiza.delete', ['id' =>  $analiza->id, 'onlyData' => 1]) }}">usuń tylko dane</a>
-
-                        <a href = "{{ route('analiza.show', ['id' =>  $analiza->id]) }}" class = "list-group-item">
-                        <h4 class = "list-group-item-heading">
-                            <p>{{ $analiza->nazwa }}</p>
-                            <p>{{ $analiza->file_path }}</p>
-                        </h4>
-                        </a>
+                        <div class="panel-heading">
+                            <a href="{{ route('analiza.lista') }}">powrót</a>
+                            @if($analiza->obszary->isEmpty())
+                                <a href="{{ route('analiza.konfiguruj', ['id' =>  $analiza->id]) }}"><span class="label label-warning">konfiguruj</span></a>
+                            @else
+                                <a href="{{ route('analiza.wykresy', ['id' =>  $analiza->id]) }}"><span class="label label-primary">wykresy</span></a>
+                                <a href="{{ route('analiza.delete', ['id' =>  $analiza->id, 'onlyData' => 1]) }}"><span class="label label-warning">usuń tylko dane</span></a>
+                            @endif
+                            <a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}"><span class="label label-danger">usuń analizę</span></a>
+                        </div>
+                        {{--<h4 class = "list-group-item-heading">--}}
+                            {{--<p>{{ $analiza->nazwa }}</p>--}}
+                            {{--<p>{{ $analiza->file_path }}</p>--}}
+                        {{--</h4>--}}
 
 
                         <ul class="nav nav-tabs">

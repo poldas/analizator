@@ -18,6 +18,7 @@ class SaveDataSource {
     {
         $savedData = $this->saveInDatabase($data);
         $this->saveFileInStorage($savedData, $fileToStore);
+        return $savedData;
     }
 
     private function saveInDatabase($dataToSave)

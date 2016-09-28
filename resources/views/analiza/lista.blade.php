@@ -17,23 +17,28 @@
                     <div class="panel-body">
                         @if(!$analizy->isEmpty())
                         <div class="table-responsive">
+                            <h3><a href="{{ route('analiza.create') }}">Dodaj nową analizę</a></h3>
                             <table id="dattab" class="table table-hover table-striped tablesorter">
                                 <thead>
                                 <tr>
-                                    <th class="header headerSortUp">ID</th>
                                     <th class="header">Nazwa</th>
-                                    <th class="header">Akcja</th>
+                                    <th class="header">Data dodania</th>
+                                    <th class="header">Data modyfikacji</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($analizy as $analiza)
                                     <tr>
-                                        <td>{{$analiza->id}}</td>
-                                        <td>{{$analiza->nazwa}}</td>
                                         <td>
-                                            <a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}">usuń</a> |
-                                            <a href="{{ route('analiza.show', ['id' =>  $analiza->id]) }}">pokaż</a> |
-                                            <a href="{{ route('analiza.wykresy', ['id' =>  $analiza->id]) }}">wykresy</a>
+                                            <a href="{{ route('analiza.show', ['id' =>  $analiza->id]) }}">
+                                                {{$analiza->nazwa}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{$analiza->created_at}}
+                                        </td>
+                                        <td>
+                                            {{$analiza->updated_at}}
                                         </td>
                                     </tr>
                                 @endforeach

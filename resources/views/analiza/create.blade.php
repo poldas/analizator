@@ -5,7 +5,7 @@
 @endsection
 
 @section('contentheader_title')
-    Dodaj nowe dane wyników egzaminu
+    Dodaj nowy egzamin
 @endsection
 @section('main-content')
     <div class="container spark-screen">
@@ -18,7 +18,7 @@
                 </ul>
             </div>
         @endif
-            @if (isset($success) && count($success) > 0)
+            @if (!empty($success))
                 <div class="alert alert-success">
                     <ul>
                         @foreach ($success->all() as $msg)
@@ -30,6 +30,9 @@
         <div class="row">
             <div class="col-md-10">
                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a href="{{ route('analiza.lista') }}">Powrót do listy</a>
+                    </div>
                     <div class="panel-body">
                         {!! Form::open(['route' => 'analiza.store', 'method' => 'post', 'files' => true]) !!}
                         <div class="form-group">

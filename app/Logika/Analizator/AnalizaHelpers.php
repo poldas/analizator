@@ -82,14 +82,6 @@ class AnalizaHelpers
         $this->mapujSredniaZadaniaPlec($id_analiza);
     }
 
-    private function mapuj_czestosc_wynikow($id_analiza)
-    {
-//        $this->mapujCzestoscWynikowCalosc($id_analiza);
-//        $this->mapujCzestoscWynikowPlec($id_analiza);
-//        $this->mapujCzestoscWynikowLokalizacja($id_analiza);
-//        $this->mapujCzestoscWynikowDysleksja($id_analiza);
-    }
-
 
     private function mapuj_umiejetnosc($dane_db, $column_srednia, $column_x,
                                        $podzial_kategorii = '', $podzial_wykresu = '', $podzial_wykresu2 = '', $nazwa = 'domyślne')
@@ -137,7 +129,13 @@ class AnalizaHelpers
             }
         }
     }
-
+    private function mapuj_czestosc_wynikow($id_analiza)
+    {
+//        $this->mapujCzestoscWynikowCalosc($id_analiza);
+//        $this->mapujCzestoscWynikowPlec($id_analiza);
+//        $this->mapujCzestoscWynikowLokalizacja($id_analiza);
+//        $this->mapujCzestoscWynikowDysleksja($id_analiza);
+    }
     private function mapuj_czestosc($dane_db, $column_srednia, $column_x, $podzial_kategorii = '', $podzial_wykresu = '', $name)
     {
         $dataset = [];
@@ -366,6 +364,7 @@ class AnalizaHelpers
 
     public function getChartsData()
     {
+        dd($this->wynik);
         return $this->wynik;
     }
 
