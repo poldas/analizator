@@ -50,4 +50,38 @@ class SredniaZadaniaParser extends Parser implements IParseToChartData {
 
         return $chartData;
     }
+
+    protected function mapuj($dane_db, $column_srednia, $category_column_name, $series_name_kategorii = '', $series_name_wykresu = '', $nazwa = 'domyślne')
+    {
+        $seriesTable = [];
+        $tags = [];
+        foreach ($dane_db as $rowValue) {
+            // przypisanie danych z bazy
+            $rowValue = (array)$rowValue; // DB zwraca object, a potrzebny array
+            $srednia = $rowValue[$column_srednia];
+            $kategoria = $rowValue[$category_column_name]; // wartość z kolumny kategorii, np . 'A', 'szkola'
+            $podzial = isset($rowValue[$series_name_kategorii])? $rowValue[$series_name_kategorii] : '';
+            $series_name = $this->getSeriesName($podzial);
+
+            $tags[$series_name] = $series_name;
+            $tags[$kategoria] = $kategoria;
+
+            // wartości serii wykresu
+            $seriesTable[$series_name]['data'][$kategoria] = $srednia;
+            $seriesTable[$series_name]['name'] = $series_name;
+            $seriesTable[$series_name]['dataLabels'] = [
+                'enabled' => true,
+                'format' => '{point.y:.2f}'
+            ];
+
+        }
+        $kategorie = array_keys($seriesTable[$series_name]['data']);
+        $series = array_values($seriesTable);
+        $chart = [];
+        $chart['categories'] = $kategorie;
+        $chart['series'] = $series;
+        $chart['tags'] = $tags;
+        $chart['name'] = 'Średnia klasy '.$this->getChartNameFromColumnName($series_name_kategorii);
+        $this->addNewChart($chart);
+    }
 }

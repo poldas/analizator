@@ -55,7 +55,7 @@
 
                         <div class="tab-content">
                             <div id="home" class="tab-pane fade in active">
-                                <h3>Obszary  @if(!$analiza->obszary->isEmpty())<a href="{{ route('analiza.obszar.delete', ['id_analiza' =>  $analiza->id]) }}">usuń obszar</a>@endif</h3>
+                                <h3>Obszary</h3>
                                 @if(!$analiza->obszary->isEmpty())
                                     @include('analiza.partials.obszary', ['obszary' => $analiza->obszary])
                                 @else
@@ -63,7 +63,7 @@
                                     @endif
                             </div>
                             <div id="menu1" class="tab-pane fade">
-                                <h3>Wyniki @if(!$analiza->wyniki->isEmpty())<a href="{{ route('analiza.wyniki.delete', ['id_analiza' =>  $analiza->id]) }}">usuń wyniki</a>@endif</h3>
+                                <h3>Wyniki</h3>
                                 @if(!$analiza->wyniki->isEmpty())
                                     @include('analiza.partials.wyniki', ['wyniki' => $analiza->wyniki])
                                 @else
@@ -71,7 +71,7 @@
                                 @endif
                             </div>
                             <div id="menu2" class="tab-pane fade">
-                                <h3>Uczniowie @if(!$analiza->uczniowie->isEmpty())<a href="{{ route('analiza.uczniowie.delete', ['id_analiza' =>  $analiza->id]) }}">usuń uczniów</a>@endif</h3>
+                                <h3>Uczniowie</h3>
                                 @if(!$analiza->uczniowie->isEmpty())
                                     @include('analiza.partials.uczniowie', ['uczniowie' => $analiza->uczniowie])
                                 @else

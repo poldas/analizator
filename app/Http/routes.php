@@ -25,26 +25,13 @@ Route::get('/home', ['as' => 'home', 'uses' =>'HomeController@home']);
 
 
 
-Route::get('/budget', ['as' => 'budget.index', 'uses' =>'BudgetController@index']);
-
-
-
-
-Route::get('/budget', ['as' => 'budget.index', 'uses' =>'BudgetController@index']);
-
-
-
-Route::get('/mieszkania', ['as' => 'mieszkania.index', 'uses' =>'MieszkaniaController@index']);
-
-
-
 /* Routing do projektu Analizator */
 Route::get('/analiza/create', ['as' => 'analiza.create', 'uses' =>'AnalizatorController@createForm']);
 Route::post('/analiza/store', ['as' => 'analiza.store', 'uses' =>'AnalizatorController@createNew']);
 Route::get('/analiza/konfiguruj/{id}', ['as' => 'analiza.konfiguruj', 'uses' =>'AnalizatorController@konfiguruj']);
 
 Route::get('/analiza/parsuj/{id}', ['as' => 'analiza.parsuj', 'uses' =>'AnalizatorController@parsuj']);
-Route::post('/analiza/parsuj/{id}', ['as' => 'analiza.parsuj', 'uses' =>'AnalizatorController@parsuj']);
+Route::post('/analiza/parsuj/{id}', ['as' => 'analiza.parsuj', 'uses' =>'AnalizatorController@save']);
 
 Route::get('/analiza/delete/{id}', ['as' => 'analiza.delete', 'uses' =>'AnalizatorController@delete']);
 

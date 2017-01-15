@@ -48,4 +48,39 @@ class SredniaCzestoscParser extends Parser implements IParseToChartData {
 
         return $chartData;
     }
+
+    protected function mapuj_czestosc($dane_db, $column_srednia, $category_column_name, $series_name_kategorii = '', $podzial_wykresu = '', $name)
+    {
+        $dataset = [];
+        $kategorie = [];
+        foreach ($dane_db as $row) {
+
+            // przypisanie danych z bazy
+            $row = (array)$row; // DB zwraca object, a potrzebny array
+            $srednia = $row[$column_srednia];
+            $kategoria = $row[$category_column_name];
+            $podzial = $series_name_kategorii ? $row[$series_name_kategorii] : 'wszystko';
+            $wykres_podzial = $podzial_wykresu ? $row[$podzial_wykresu] : '';
+
+            $kategorie[$wykres_podzial][$kategoria] = $kategoria;
+
+            $dataset[$wykres_podzial][$podzial][] = $srednia;
+        }
+        $chartsTable = [];
+        foreach ($dataset as $chartType => $chartSeriesData) {
+//            var_dump(array_keys($kategorie[$chartType]));
+//            var_dump($chartType);
+            $chart = [];
+            $podzial = isset($rowValue[$series_name_kategorii])? $rowValue[$series_name_kategorii] : '';
+            $series_name = $this->getSeriesName($podzial);
+            $chart['data'] = array_values($chartSeriesData);
+            $chart['name'] = $series_name;
+            $chart['dataLabels'] = [
+                'enabled' => true,
+                'format' => '{point.y:.2f}'
+            ];
+
+            $chartsTable[] = $chart;
+        }
+    }
 }

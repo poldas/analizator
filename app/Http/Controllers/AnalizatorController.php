@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AnalizatorController extends Controller
 {
-
     /**
      * @var Analizator
      */
@@ -31,6 +30,7 @@ class AnalizatorController extends Controller
 
     public function __construct()
     {
+        $this->middleware('cors');
         $this->analizator = new Analizator();
     }
 

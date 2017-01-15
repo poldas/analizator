@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Storage;
 
 class Analizator {
 
+    public function save($id)
+    {
+        
+    }
     public function addData($id_analiza)
     {
         $analiza = Analiza::find($id_analiza);
@@ -63,17 +67,11 @@ class Analizator {
         $chartDirector = new ChartDirector();
         $chartDirector->setId($id);
 //        $chartDirector->addToRender(Parser::TYP_OBSZAR);
+        $chartDirector->addToRender(Parser::TYP_UMIEJETNOSC);
 //        $chartDirector->addToRender(Parser::TYP_CZESTOSC);
         $chartDirector->addToRender(Parser::TYP_SREDNIA);
 //        $chartDirector->addToRender(Parser::TYP_ZADANIE);
         $dane = $chartDirector->getCharts();
-        dd();
-        return $dane;
-
-        $analizator = new AnalizaHelpers();
-        $analizator->addChartsData($id, AnalizaHelpers::TYP_OBSZAR);
-
-        $dane = $analizator->getChartsData($id);
         return $dane;
     }
 

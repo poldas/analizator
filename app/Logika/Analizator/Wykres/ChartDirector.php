@@ -4,6 +4,7 @@ namespace App\Logika\Analizator\Wykres;
 class ChartDirector
 {
     private $builder;
+    private $id_analiza;
 
     public function __construct($id = null)
     {
@@ -11,15 +12,17 @@ class ChartDirector
         if($id) $this->setId($id);
     }
 
-    public function setId($analiza_id)
+    public function setId($id_analiza)
     {
-        $this->builder->setId($analiza_id);
+        $this->id_analiza = $id_analiza;
+        $this->builder->setId($this->id_analiza);
         return $this;
     }
 
-    private function setBuilder(ChartBuilderInterface $builder)
+    public function setBuilder(ChartBuilderInterface $builder)
     {
         $this->builder = $builder;
+        $this->setId($this->id_analiza);
         return $this;
     }
 
