@@ -2,13 +2,12 @@
 namespace App\Logika\Analizator;
 
 use App\Analiza;
-use App\Logika\Analizator\Wykres\ChartBuilder;
 use App\Logika\Analizator\Wykres\ChartDirector;
 use App\Logika\Analizator\Wykres\Parsers\Parser;
 use App\Obszar;
 use App\Uczen;
+use App\Wykres;
 use App\Wynik;
-use App\Logika\Analizator\ParseDataSource;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,6 +27,10 @@ class Analizator {
         $parser->parse();
 
         $this->addDataToDB($parser);
+        $wykresy = $this->parseData($id_analiza);
+        foreach ($wykresy as $wykres) {
+            Wykres::create($wykres);
+        }
     }
 
     public function getAllAnalize()
@@ -62,15 +65,21 @@ class Analizator {
     }
 
 
-    public function parseData($id)
+    public function parseData($id, $chart_types = null)
     {
-        $chartDirector = new ChartDirector();
-        $chartDirector->setId($id);
-        $chartDirector->addToRender(Parser::TYP_UMIEJETNOSC);
-        $chartDirector->addToRender(Parser::TYP_SREDNIA);
-        $chartDirector->addToRender(Parser::TYP_ZADANIE);
-        $chartDirector->addToRender(Parser::TYP_CZESTOSC);
-        $chartDirector->addToRender(Parser::TYP_OBSZAR);
+        $chartDirector = new ChartDirector($id);
+        if ($chart_types) {
+            foreach ($chart_types as $type) {
+                $chartDirector->addToRender($type);
+            }
+        } else {
+            $chartDirector->addToRender(Parser::TYP_SREDNIA);
+            $chartDirector->addToRender(Parser::TYP_SREDNIA_PUNKTY);
+            $chartDirector->addToRender(Parser::TYP_OBSZAR);
+            $chartDirector->addToRender(Parser::TYP_CZESTOSC);
+            $chartDirector->addToRender(Parser::TYP_UMIEJETNOSC);
+            $chartDirector->addToRender(Parser::TYP_ZADANIE);
+        }
         $dane = $chartDirector->getCharts();
         return $dane;
     }

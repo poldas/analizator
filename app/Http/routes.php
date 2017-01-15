@@ -43,7 +43,7 @@ Route::get('/analiza/lista', ['as' => 'analiza.lista', 'uses' =>'AnalizatorContr
 
 
 Route::get('/analiza/wykresy/{id_analiza}', ['as' => 'analiza.wykresy', 'uses' =>'WykresyController@wykresy']);
-Route::post('/analiza/wykresy/{id_analiza}', ['as' => 'analiza.wykresy.post', 'uses' =>'WykresyController@wykresy']);
+Route::put('/analiza/wykresy/{id_analiza}', ['as' => 'analiza.wykresy.put', 'uses' =>'WykresyController@put']);
 
 
 Route::get('/analiza/obszar/delete/{id_analiza}', ['as' => 'analiza.obszar.delete', 'uses' =>'AnalizatorController@obszarDelete']);

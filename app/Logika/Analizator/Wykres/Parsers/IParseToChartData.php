@@ -4,6 +4,7 @@ interface IParseToChartData {
 
     const CALOSC = 'szkoła';
     const TYP_SREDNIA = 'srednia';
+    const TYP_SREDNIA_PUNKTY = 'sredniapunkty';
     const TYP_OBSZAR = 'obszar';
     const TYP_ZADANIE = 'zadanie';
     const TYP_CZESTOSC = 'czestosc';
@@ -22,5 +23,5 @@ interface IParseToChartData {
 
     public function getResult();
     public function addToRender($chartToRender);
-    public function parseDataToChart($id_analiza);
+    public function parseDataToChart();
 }

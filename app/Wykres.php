@@ -11,10 +11,10 @@ class Wykres extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'options' => 'array',
-        'category' => 'array',
+        'labels' => 'array',
+        'tags' => 'array',
         'series' => 'array',
     ];
 
-    protected $fillable = ['id_analiza', 'xaxis_name', 'yaxis_name', 'chart_name', 'id_chart', 'category', 'options', 'series'];
+    protected $fillable = ['id', 'id_analiza', 'name', 'series', 'labels', 'tags'];
 }

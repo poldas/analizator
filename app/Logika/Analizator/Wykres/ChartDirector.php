@@ -9,20 +9,20 @@ class ChartDirector
     public function __construct($id = null)
     {
         $this->setBuilder(new ChartBuilder());
-        if($id) $this->setId($id);
+        $this->setIdAnaliza($id);
     }
 
-    public function setId($id_analiza)
+    public function setIdAnaliza($id_analiza)
     {
         $this->id_analiza = $id_analiza;
-        $this->builder->setId($this->id_analiza);
+        $this->builder->setIdAnaliza($this->id_analiza);
         return $this;
     }
 
     public function setBuilder(ChartBuilderInterface $builder)
     {
         $this->builder = $builder;
-        $this->setId($this->id_analiza);
+        $this->setIdAnaliza($this->id_analiza);
         return $this;
     }
 

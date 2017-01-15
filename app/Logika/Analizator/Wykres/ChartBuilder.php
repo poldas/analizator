@@ -2,6 +2,7 @@
 namespace App\Logika\Analizator\Wykres;
 use App\Logika\Analizator\Wykres\Parsers\Parser;
 use App\Logika\Analizator\Wykres\Parsers\SredniaKlasyParser;
+use App\Logika\Analizator\Wykres\Parsers\SredniaPunktyKlasyParser;
 use App\Logika\Analizator\Wykres\Parsers\SredniaUmiejetnoscParser;
 use App\Logika\Analizator\Wykres\Parsers\SredniaZadaniaParser;
 use App\Logika\Analizator\Wykres\Parsers\SredniaObszarParser;
@@ -21,7 +22,7 @@ class ChartBuilder implements ChartBuilderInterface {
 
     public function __construct()
     {
-        $this->chart = new Chart();
+        $this->chartType = [];
     }
 
     public function addToRender($chartType)
@@ -29,9 +30,9 @@ class ChartBuilder implements ChartBuilderInterface {
         $this->chartType[] = $chartType;
     }
 
-    public function setId($analiza_id)
+    public function setIdAnaliza($id_analiza)
     {
-        $this->analiza_id = $analiza_id;
+        $this->id_analiza = $id_analiza;
     }
 
     public function getChart()
@@ -46,7 +47,7 @@ class ChartBuilder implements ChartBuilderInterface {
     {
         foreach ($this->chartType as $chartType) {
             $this->setBuilderByType($chartType);
-            $this->builder->parseDataToChart($this->analiza_id);
+            $this->builder->parseDataToChart();
             $this->parsedData = array_merge($this->builder->getResult(), $this->parsedData);
         }
     }
@@ -56,6 +57,9 @@ class ChartBuilder implements ChartBuilderInterface {
         switch ($chartType) {
             case Parser::TYP_SREDNIA:
                 $this->setBuilder(new SredniaKlasyParser());
+                break;
+            case Parser::TYP_SREDNIA_PUNKTY:
+                $this->setBuilder(new SredniaPunktyKlasyParser());
                 break;
             case Parser::TYP_UMIEJETNOSC:
                 $this->setBuilder(new SredniaUmiejetnoscParser());
@@ -77,6 +81,7 @@ class ChartBuilder implements ChartBuilderInterface {
     private function setBuilder(Parser $builder)
     {
         $this->builder = $builder;
+        $this->builder->setIdAnaliza($this->id_analiza);
     }
 
     private function prepareMetadata()

@@ -2,7 +2,7 @@
 namespace App\Logika\Analizator\Wykres\Parsers;
 use App\Logika\Analizator\ZapytaniaSql;
 
-class SredniaKlasyParser extends Parser {
+class SredniaPunktyKlasyParser extends Parser {
 
     public function parseDataToChart()
     {
@@ -15,28 +15,28 @@ class SredniaKlasyParser extends Parser {
     private function mapujSredniaCalosc()
     {
         $opcje = $this->getOptions();
-        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_CALOSC_KLASA, $opcje);
+        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_PUNKTOW_GRUPY_CALOSC, $opcje);
         $this->mapuj_srednia_calosc($dane_db);
     }
 
     private function mapujSredniaDysleksja()
     {
         $opcje = $this->getOptions();
-        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_CALOSC_KLASA_DYSLEKSJA, $opcje);
+        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_PUNKTOW_GRUPY_DYSLEKSJA, $opcje);
         $this->mapuj_srednia_calosc($dane_db, Parser::COLUMN_NAME_DYSLEKSJA);
     }
 
     private function mapujSredniaLokalizacja()
     {
         $opcje = $this->getOptions();
-        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_CALOSC_KLASA_LOKALIZACJA, $opcje);
+        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_PUNKTOW_GRUPY_LOKALIZACJA, $opcje);
         $this->mapuj_srednia_calosc($dane_db, Parser::COLUMN_NAME_LOKALIZACJA);
     }
 
     private function mapujSredniaPlec()
     {
         $opcje = $this->getOptions();
-        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_CALOSC_KLASA_PLEC, $opcje);
+        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_PUNKTOW_GRUPY_PLEC, $opcje);
         $this->mapuj_srednia_calosc($dane_db, Parser::COLUMN_NAME_PLEC);
 
     }
@@ -57,7 +57,7 @@ class SredniaKlasyParser extends Parser {
     protected function getChartName($wykres1, $wykres2, $series_type)
     {
         $series_name = $this->translateSeriesType($series_type);
-        return 'Średnia '.$series_name;
+        return 'Średnia punktów -  '.$series_name;
     }
 
     private function getOptions()
@@ -67,6 +67,6 @@ class SredniaKlasyParser extends Parser {
 
     protected function getChartId($wykres1, $wykres2, $series_type)
     {
-        return strtolower('srednia'.$series_type);
+        return strtolower('sredniapunkty'.$series_type);
     }
 }

@@ -4,39 +4,38 @@ use App\Logika\Analizator\ZapytaniaSql;
 
 class SredniaUmiejetnoscParser extends Parser {
 
-
-    public function parseDataToChart($id_analiza)
+    public function parseDataToChart()
     {
-        $this->mapujSredniaUmiejetnoscCalosc($id_analiza);
-        $this->mapujSredniaUmiejetnoscDysleksja($id_analiza);
-        $this->mapujSredniaUmiejetnoscLokalizacja($id_analiza);
-        $this->mapujSredniaUmiejetnoscPlec($id_analiza);
+        $this->mapujSredniaUmiejetnoscCalosc();
+        $this->mapujSredniaUmiejetnoscDysleksja();
+        $this->mapujSredniaUmiejetnoscLokalizacja();
+        $this->mapujSredniaUmiejetnoscPlec();
     }
 
-    private function mapujSredniaUmiejetnoscCalosc($id_analiza)
+    private function mapujSredniaUmiejetnoscCalosc()
     {
-        $options = $this->getOptions($id_analiza);
+        $options = $this->getOptions();
         $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_UMIEJETNOSC_CALOSC, $options);
         $this->mapuj_umiejetnosc_calosc($dane_db);
     }
 
-    private function mapujSredniaUmiejetnoscDysleksja($id_analiza)
+    private function mapujSredniaUmiejetnoscDysleksja()
     {
-        $options = $this->getOptions($id_analiza);
+        $options = $this->getOptions();
         $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_UMIEJETNOSC_DYSLEKSJA, $options);
         $this->mapuj_umiejetnosc_calosc($dane_db, self::COLUMN_NAME_DYSLEKSJA);
     }
 
-    private function mapujSredniaUmiejetnoscLokalizacja($id_analiza)
+    private function mapujSredniaUmiejetnoscLokalizacja()
     {
-        $options = $this->getOptions($id_analiza);
+        $options = $this->getOptions();
         $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_UMIEJETNOSC_LOKALIZACJA, $options);
         $this->mapuj_umiejetnosc_calosc($dane_db, self::COLUMN_NAME_LOKALIZACJA);
     }
 
-    private function mapujSredniaUmiejetnoscPlec($id_analiza)
+    private function mapujSredniaUmiejetnoscPlec()
     {
-        $options = $this->getOptions($id_analiza);
+        $options = $this->getOptions();
         $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_UMIEJETNOSC_PLEC, $options);
         $this->mapuj_umiejetnosc_calosc($dane_db, self::COLUMN_NAME_PLEC);
     }
@@ -64,40 +63,28 @@ class SredniaUmiejetnoscParser extends Parser {
             $label = $row[self::COLUMN_NAME_UMIEJETNOSC];
             $wykres_obszar = $row[self::COLUMN_NAME_OBSZAR];
             $wykres_klasa = $row[self::COLUMN_NAME_KLASA];
-            if(!empty($series_param_type)) {
-                $series_name = $row[$series_param_type];
-                $series_type = $series_param_type;
-            } else {
-                $series_type = $series_name = 'bezpodzialu';
-            }
+            $chart_id = $this->prepareDataset($dataset, $row, $value, $label, $wykres_obszar, $wykres_klasa, $series_param_type);
 
-            $chart_id = $this->getChartId($wykres_obszar, $wykres_klasa, $series_type);
-            $chart_name = $this->getChartName($wykres_obszar, $wykres_klasa, $series_type);
-            $dataset[$chart_id]['id'] = $chart_id;
-            $dataset[$chart_id]['name'] = $chart_name;
-            $dataset[$chart_id]['series'][$series_name][$label] = $value;
-            $dataset[$chart_id]['labels'][$label] = $label;
-            $dataset[$chart_id]['tags'][$this->translateSeriesType($series_type)] = $this->translateSeriesType($series_type);
             $dataset[$chart_id]['tags'][$wykres_obszar] = 'obszar '.$wykres_obszar;
             $dataset[$chart_id]['tags'][$wykres_klasa] = 'klasa '.$wykres_klasa;
         }
         $this->addNewChart($dataset);
     }
 
-    private function getOptions($id_analiza)
+    private function getOptions()
     {
-        return [$id_analiza, $id_analiza, $id_analiza, $id_analiza];
+        return [$this->id_analiza, $this->id_analiza, $this->id_analiza, $this->id_analiza];
     }
 
-    protected function getChartId($wykres_obszar, $wykres_klasa, $series_type)
+    protected function getChartId($wykres1, $wykres2, $series_type)
     {
-        return strtolower('obszar'.$wykres_obszar.'klasa'.$wykres_klasa.$series_type);
+        return strtolower('obszar'.$wykres1.'klasa'.$wykres2.$series_type);
     }
 
-    protected function getChartName($wykres_obszar, $wykres_klasa, $series_type)
+    protected function getChartName($wykres1, $wykres2, $series_type)
     {
-        $klasa = $this->translateKlasa($wykres_klasa);
+        $klasa = $this->translateKlasa($wykres2);
         $series_name = $this->translateSeriesType($series_type);
-        return 'Obszar '.$wykres_obszar.', '.$klasa.', '.$series_name;
+        return 'Obszar '.$wykres1.', '.$klasa.', '.$series_name;
     }
 }
