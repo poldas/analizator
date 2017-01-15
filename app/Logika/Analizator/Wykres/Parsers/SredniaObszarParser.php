@@ -20,62 +20,76 @@ class SredniaObszarParser extends Parser implements IParseToChartData {
 
     private function mapujSredniaObszarCalosc($id_analiza)
     {
-        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_CALOSC, [$id_analiza, $id_analiza]);
-        $this->mapuj_srednia_obszar($dane_db, Parser::COLUMN_NAME_SREDNIA_PKT, Parser::COLUMN_NAME_KLASA, Parser::COLUMN_NAME_OBSZAR, null, null, 'obszar całość');
+        $options = $this->getOptions($id_analiza);
+        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_CALOSC, $options);
+        $this->mapuj_zadania_calosc($dane_db);
     }
 
     private function mapujSredniaObszarDysleksja($id_analiza)
     {
-        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_DYSLEKSJA, [$id_analiza, $id_analiza]);
-        $this->mapuj_srednia_obszar($dane_db, Parser::COLUMN_NAME_SREDNIA_PKT, Parser::COLUMN_NAME_OBSZAR, Parser::COLUMN_NAME_DYSLEKSJA, Parser::COLUMN_NAME_KLASA, 'obszar dysleksja');
+        $options = $this->getOptions($id_analiza);
+        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_DYSLEKSJA, $options);
+        $this->mapuj_zadania_calosc($dane_db, Parser::COLUMN_NAME_DYSLEKSJA);
     }
 
     private function mapujSredniaObszarLokalizacja($id_analiza)
     {
-        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_LOKALIZACJA, [$id_analiza, $id_analiza]);
-        $this->mapuj_srednia_obszar($dane_db, Parser::COLUMN_NAME_SREDNIA_PKT, Parser::COLUMN_NAME_OBSZAR, Parser::COLUMN_NAME_LOKALIZACJA, Parser::COLUMN_NAME_KLASA, 'obszar lokalizacja');
+        $options = $this->getOptions($id_analiza);
+        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_LOKALIZACJA, $options);
+        $this->mapuj_zadania_calosc($dane_db, Parser::COLUMN_NAME_LOKALIZACJA);
     }
 
     private function mapujSredniaObszarPlec($id_analiza)
     {
-        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_PLEC, [$id_analiza, $id_analiza]);
-        $this->mapuj_srednia_obszar($dane_db, Parser::COLUMN_NAME_SREDNIA_PKT, Parser::COLUMN_NAME_OBSZAR, Parser::COLUMN_NAME_PLEC, Parser::COLUMN_NAME_KLASA, 'obszar plec');
+        $options = $this->getOptions($id_analiza);
+        $dane_db = $this->dbSelect(ZapytaniaSql::SREDNIA_OBSZAR_PLEC, $options);
+        $this->mapuj_zadania_calosc($dane_db, Parser::COLUMN_NAME_PLEC);
     }
 
-    protected function mapuj_srednia_obszar($dane_db, $column_srednia, $category_column_name, $series_name_kategorii = '', $series_name_wykresu = '', $nazwa = 'domyślne')
+    protected function mapuj_zadania_calosc($dane_db, $series_param_type = null)
     {
-        $seriesTable = [];
-        $tags = [];
-        dd($dane_db);
-        foreach ($dane_db as $rowValue) {
-//            var_dump($rowValue);
+        $dataset = [];
+        foreach ($dane_db as $row) {
             // przypisanie danych z bazy
-            $rowValue = (array)$rowValue; // DB zwraca object, a potrzebny array
-            $srednia = $rowValue[$column_srednia];
-            $kategoria = $rowValue[$category_column_name]; // wartość z kolumny kategorii, np . 'A', 'szkola'
-            $podzial = isset($rowValue[$series_name_kategorii])? $rowValue[$series_name_kategorii] : '';
-            $series_name = $this->getSeriesName($podzial);
+            $row = (array)$row; // DB zwraca object, a potrzebny array
+            $value = $row[self::COLUMN_NAME_SREDNIA_PKT];
+            $label = $row[self::COLUMN_NAME_OBSZAR];
+            $wykres_klasa = $row[self::COLUMN_NAME_KLASA];
+            if(!empty($series_param_type)) {
+                $series_name = $row[$series_param_type];
+                $series_type = $series_param_type;
+            } else {
+                $series_type = $series_name = 'bezpodzialu';
+            }
 
-            $tags[$series_name] = $series_name;
-            $tags[$kategoria] = $kategoria;
-
-            // wartości serii wykresu
-            $seriesTable[$series_name]['data'][] = $srednia;
-            $seriesTable[$series_name]['name'] = $series_name;
-            $seriesTable[$series_name]['dataLabels'] = [
-                'enabled' => true,
-                'format' => '{point.y:.2f}'
-            ];
+            $chart_id = $this->getChartId($wykres_klasa, $series_type);
+            $chart_name = $this->getChartName($wykres_klasa, $series_type);
+            $dataset[$chart_id]['id'] = $chart_id;
+            $dataset[$chart_id]['name'] = $chart_name;
+            $dataset[$chart_id]['series'][$series_name][$label] = $value;
+            $dataset[$chart_id]['labels'][$label] = $label;
+            $dataset[$chart_id]['tags']['średnia obszary'] = 'średnia obszary';
+            $dataset[$chart_id]['tags'][$wykres_klasa] = 'klasa '.$wykres_klasa;
+            $dataset[$chart_id]['tags'][$this->translateSeriesType($series_type)] = $this->translateSeriesType($series_type);
         }
-//        var_dump($seriesTable);
-        $kategorie = array_keys($tags);
-        $series = array_values($seriesTable);
-        $chart = [];
-        $chart['categories'] = $kategorie;
-        $chart['series'] = $series;
-        $chart['tags'] = $tags;
-        $chart['name'] = 'Średnia obszarów'.$this->getChartNameFromColumnName($series_name_kategorii);
-//        var_dump($chart);
-        $this->addNewChart($chart);
+        $this->addNewChart($dataset);
     }
+
+    protected function getChartName($wykres_klasa, $series_type)
+    {
+        $series_name = $this->translateSeriesType($series_type);
+        $klasa = $this->translateKlasa($wykres_klasa);
+        return 'Średnia dla obszarów, '.$klasa.' '.$series_name;
+    }
+
+    private function getOptions($id_analiza)
+    {
+        return [$id_analiza, $id_analiza];
+    }
+
+    protected function getChartId($wykres_klasa, $series_type)
+    {
+        return strtolower('obszaryklasa'.$wykres_klasa.$series_type);
+    }
+
 }

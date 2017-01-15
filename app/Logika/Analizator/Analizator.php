@@ -66,11 +66,11 @@ class Analizator {
     {
         $chartDirector = new ChartDirector();
         $chartDirector->setId($id);
-//        $chartDirector->addToRender(Parser::TYP_OBSZAR);
         $chartDirector->addToRender(Parser::TYP_UMIEJETNOSC);
-//        $chartDirector->addToRender(Parser::TYP_CZESTOSC);
         $chartDirector->addToRender(Parser::TYP_SREDNIA);
-//        $chartDirector->addToRender(Parser::TYP_ZADANIE);
+        $chartDirector->addToRender(Parser::TYP_ZADANIE);
+        $chartDirector->addToRender(Parser::TYP_CZESTOSC);
+        $chartDirector->addToRender(Parser::TYP_OBSZAR);
         $dane = $chartDirector->getCharts();
         return $dane;
     }
