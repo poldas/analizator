@@ -14,7 +14,8 @@ class Wykres extends Model
         'labels' => 'array',
         'tags' => 'array',
         'series' => 'array',
+        'options' => 'array',
     ];
 
-    protected $fillable = ['id', 'id_analiza', 'name', 'series', 'labels', 'tags'];
+    protected $fillable = ['name', 'id_analiza', 'series', 'options', 'opis', 'labels', 'tags'];
 }

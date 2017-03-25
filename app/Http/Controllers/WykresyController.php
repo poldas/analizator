@@ -14,14 +14,25 @@ class WykresyController extends Controller
         $this->analizator = new Analizator();
     }
 
-    public function put($id_analiza)
+    public function save($id_wykres)
     {
-
+        $dane = request()->all();
+        $wykres = Wykres::find($id_wykres);
+        $wykres->update($dane);
+        return response()->json($wykres);
     }
     public function wykresy($id_analiza)
     {
         $wykresy = Wykres::where(['id_analiza' => $id_analiza])->get();
-        return  response()->json($wykresy);
+        return view('analiza.wykresy', compact('wykresy', 'id_analiza'));
+    }
+
+    public function wykresyapi($id_analiza)
+    {
+        $wykresy = Wykres::where([
+            ['id_analiza', '=', $id_analiza], ['tags', 'LIKE', '%wszystko%']
+        ])->get();
+        return response()->json($wykresy);
     }
 
     public function parsujDaneWykresu()

@@ -49,7 +49,8 @@ class SredniaPunktyKlasyParser extends Parser {
             $row = (array)$row; // DB zwraca object, a potrzebny array
             $value = $row[self::COLUMN_NAME_SREDNIA_PKT];
             $label = $row[self::COLUMN_NAME_KLASA];
-            $this->prepareDataset($dataset, $row, $value, $label, null, null, $series_param_type);
+            $chart_id = $this->prepareDataset($dataset, $row, $value, $label, null, null, $series_param_type);
+            $dataset[$chart_id]['tags']['średnia punkty'] = 'średnia punkty';
         }
         $this->addNewChart($dataset);
     }

@@ -48,7 +48,7 @@ abstract class Parser implements IParseToChartData {
             $series_name_flag = $row[$series_param_type];
             $series_type = $series_param_type;
         } else {
-            $series_type = $series_name_flag = 'bezpodzialu';
+            $series_type = $series_name_flag = 'wszystko';
         }
         $series_name = $this->translateSeriesName($series_name_flag);
         $chart_id = $this->getChartId($wykres1, $wykres2, $series_type);
@@ -61,6 +61,14 @@ abstract class Parser implements IParseToChartData {
         $dataset[$chart_id]['series'][$series_name]['name'] = $series_name;
         $dataset[$chart_id]['labels'][$label] = $label;
         $dataset[$chart_id]['tags'][$translated_series] = $translated_series;
+        if ($wykres1) {
+            $wykres_klasa = $this->translateKlasa($wykres2);
+            $dataset[$chart_id]['tags'][$wykres_klasa] = $wykres_klasa;
+        }
+        if ($wykres2) {
+            $wykres_klasa = $this->translateKlasa($wykres2);
+            $dataset[$chart_id]['tags'][$wykres_klasa] = $wykres_klasa;
+        }
         return $chart_id;
     }
 
@@ -73,10 +81,10 @@ abstract class Parser implements IParseToChartData {
     protected function translateSeriesType($seriesType)
     {
         switch ($seriesType) {
-            case self::COLUMN_NAME_DYSLEKSJA: return 'wg dysleksji';
-            case self::COLUMN_NAME_LOKALIZACJA: return 'wg lokalizacji';
-            case self::COLUMN_NAME_PLEC: return 'wg płci';
-            default: return 'bez podziałów';
+            case self::COLUMN_NAME_DYSLEKSJA: return 'dysleksja';
+            case self::COLUMN_NAME_LOKALIZACJA: return 'lokalizacja';
+            case self::COLUMN_NAME_PLEC: return 'płeć';
+            default: return 'wszystko';
         }
     }
 
@@ -85,6 +93,6 @@ abstract class Parser implements IParseToChartData {
         if (isset($this->mapowanie_podzialu_wykresu[$series_name])) {
             return $this->mapowanie_podzialu_wykresu[$series_name];
         }
-        return 'bez podziału';
+        return 'wszystko';
     }
 }

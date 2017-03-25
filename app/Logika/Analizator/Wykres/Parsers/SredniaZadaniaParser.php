@@ -51,7 +51,6 @@ class SredniaZadaniaParser extends Parser {
             $wykres_klasa = $row[self::COLUMN_NAME_KLASA];
             $chart_id = $this->prepareDataset($dataset, $row, $value, $label, null, $wykres_klasa, $series_param_type);
             $dataset[$chart_id]['tags']['średnia zadań'] = 'średnia zadań';
-            $dataset[$chart_id]['tags'][$wykres_klasa] = 'klasa '.$wykres_klasa;
         }
         $this->addNewChart($dataset);
     }

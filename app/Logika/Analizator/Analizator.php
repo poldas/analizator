@@ -25,7 +25,6 @@ class Analizator {
         $parser->setAnalizaId($id_analiza)
             ->setDataToParse($dataSource);
         $parser->parse();
-
         $this->addDataToDB($parser);
         $wykresy = $this->parseData($id_analiza);
         foreach ($wykresy as $wykres) {

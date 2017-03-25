@@ -50,9 +50,7 @@ class SredniaObszarParser extends Parser implements IParseToChartData {
             $label = $row[self::COLUMN_NAME_OBSZAR];
             $wykres_klasa = $row[self::COLUMN_NAME_KLASA];
             $chart_id = $this->prepareDataset($dataset, $row, $value, $label, null, $wykres_klasa, $series_param_type);
-
-            $dataset[$chart_id]['tags']['średnia obszary'] = 'średnia obszary';
-            $dataset[$chart_id]['tags'][$wykres_klasa] = 'klasa '.$wykres_klasa;
+            $dataset[$chart_id]['tags']['średnia obszar'] = 'średnia obszar';
         }
         $this->addNewChart($dataset);
     }

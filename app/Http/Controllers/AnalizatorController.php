@@ -21,6 +21,23 @@ class AnalizatorController extends Controller
      */
     private $analizator;
 
+    public function create()
+    {
+        $request = request();
+        try{
+            $this->validate($request, [
+                'nazwa' => 'required|max:150',
+                'file' => 'required',
+            ]);
+        } catch(ValidationException $e) {
+            return redirect('analiza/create')
+                ->withErrors($e->getMessage())
+                ->withInput();
+        }
+        $this->analizator->createDataSetFromRequest($request);
+        return  redirect('analiza/lista');
+    }
+
     public function __construct()
     {
         $this->middleware('cors');
@@ -107,22 +124,5 @@ class AnalizatorController extends Controller
     public function createForm()
     {
         return view('analiza.create');
-    }
-
-    public function createNew()
-    {
-        $request = request();
-        try{
-            $this->validate($request, [
-                'nazwa' => 'required|max:150',
-                'file' => 'required',
-            ]);
-        } catch(ValidationException $e) {
-            return redirect('analiza/create')
-                ->withErrors($e->getMessage())
-                ->withInput();
-        }
-        $this->analizator->createDataSetFromRequest($request);
-        return  redirect('analiza/lista');
     }
 }

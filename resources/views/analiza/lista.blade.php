@@ -5,14 +5,12 @@
 @endsection
 
 @section('contentheader_title')
-    zarządzaj
 @endsection
 @section('main-content')
     <div class="container spark-screen">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Przeglądaj</div>
                     @include('partials.flashmessage')
                     <div class="panel-body">
                         @if(!$analizy->isEmpty())
@@ -24,6 +22,7 @@
                                     <th class="header">Nazwa</th>
                                     <th class="header">Data dodania</th>
                                     <th class="header">Data modyfikacji</th>
+                                    <th class="header"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -40,6 +39,7 @@
                                         <td>
                                             {{$analiza->updated_at}}
                                         </td>
+                                        <td><a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}"><span class="label label-danger">usuń</span></a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

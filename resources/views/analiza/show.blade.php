@@ -37,7 +37,7 @@
                                 <a href="{{ route('analiza.konfiguruj', ['id' =>  $analiza->id]) }}"><span class="label label-warning">konfiguruj</span></a>
                             @else
                                 <a href="{{ route('analiza.wykresy', ['id' =>  $analiza->id]) }}"><span class="label label-primary">wykresy</span></a>
-                                <a href="{{ route('analiza.delete', ['id' =>  $analiza->id, 'onlyData' => 1]) }}"><span class="label label-warning">usuń tylko dane</span></a>
+                                <a href="{{ route('analiza.wykresyapi', ['id' =>  $analiza->id]) }}"><span class="label label-primary">wykresy API</span></a>
                             @endif
                             <a href="{{ route('analiza.delete', ['id' =>  $analiza->id]) }}"><span class="label label-danger">usuń analizę</span></a>
                         </div>

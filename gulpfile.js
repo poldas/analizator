@@ -1,4 +1,5 @@
 var elixir = require('laravel-elixir');
+require('laravel-elixir-webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,7 +13,10 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.less('app.less');
-    mix.less('admin-lte/AdminLTE.less');
-    mix.less('bootstrap/bootstrap.less');
+    // mix.less('app.less');
+    // mix.less('admin-lte/AdminLTE.less');
+    // mix.less('bootstrap/bootstrap.less')
+    mix.copy('resources/assets/js/chart-app/dist/chart-app-styles.css', 'public/css/chart-app-styles.css')
+    mix.copy('resources/assets/js/chart-app/dist/chart-app.min.js', 'public/js/chart-app.min.js');
+    mix.copy('resources/assets/js/chart-app/dist/vendor.js', 'public/js/vendor.js');
 });

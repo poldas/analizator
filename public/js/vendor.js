@@ -1,0 +1,1 @@
+../../resources/assets/js/chart-app/dist/vendor.js

@@ -17,6 +17,7 @@ class CreateWykresTable extends Migration
             $table->integer('id_analiza')->length(10)->unsigned();
             $table->string('name');
             $table->longText('series');
+            $table->longText('options')->nullable();
             $table->string('labels');
             $table->string('tags');
             $table->text('opis');

@@ -34,7 +34,7 @@
                         <a href="{{ route('analiza.lista') }}">Powrót do listy</a>
                     </div>
                     <div class="panel-body">
-                        {!! Form::open(['route' => 'analiza.store', 'method' => 'post', 'files' => true]) !!}
+                        {!! Form::open(['route' => 'analiza.new', 'method' => 'post', 'files' => true]) !!}
                         <div class="form-group">
                             {!! Form::label('nazwa', "Nazwa egzaminu", ['class' => 'control-label']) !!}
                             {!! Form::text('nazwa', null, ['class'=>'form-control']) !!}
