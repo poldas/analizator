@@ -16,7 +16,8 @@ elixir(function(mix) {
     // mix.less('app.less');
     // mix.less('admin-lte/AdminLTE.less');
     // mix.less('bootstrap/bootstrap.less')
-    mix.copy('resources/assets/js/chart-app/dist/chart-app-styles.css', 'public/css/chart-app-styles.css')
-    mix.copy('resources/assets/js/chart-app/dist/chart-app.min.js', 'public/js/chart-app.min.js');
-    mix.copy('resources/assets/js/chart-app/dist/vendor.js', 'public/js/vendor.js');
+    mix.copy('resources/assets/js/wykresy/dist/static/css/wykresy.css', 'public/css/wykresy.css')
+    mix.copy('resources/assets/js/wykresy/dist/static/js/manifest.js', 'public/js/manifest.js');
+    mix.copy('resources/assets/js/wykresy/dist/static/js/wykresy.js', 'public/js/wykresy.js');
+    mix.copy('resources/assets/js/wykresy/dist/static/js/vendor.js', 'public/js/vendor.js');
 });

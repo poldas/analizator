@@ -30,7 +30,7 @@ class WykresyController extends Controller
     public function wykresyapi($id_analiza)
     {
         $wykresy = Wykres::where([
-            ['id_analiza', '=', $id_analiza], ['tags', 'LIKE', '%wszystko%']
+            ['id_analiza', '=', $id_analiza]//, ['tags', 'LIKE', '%wszystko%dysleksja']
         ])->get();
         return response()->json($wykresy);
     }

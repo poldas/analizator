@@ -7,8 +7,9 @@ namespace App\Logika\Analizator;
  */
 class ParseDataSource {
 
-    const LOKALIZACJA_PATTERN = ['m', 'w', 'mi', 'wi'];
-    const PLEC_PATTERN = ['K', 'M', 'C', 'D', 'c', 'd'];
+    // TODO: poprawić tak aby uzupełniało płeć, dysleksję inlokalizację niezależnie od wielkości litery np. m
+    const LOKALIZACJA_PATTERN = ['m', 'W', 'w', 'mi', 'wi'];
+    const PLEC_PATTERN = ['k', 'K', 'M', 'C', 'D', 'c', 'd'];
     const DYSLEKSJA_PATTERN = ['T', 'N', 't', 'n'];
 
     const ZADANIA_PATTERN = ['zadanie', 'zadania'];
@@ -146,6 +147,8 @@ class ParseDataSource {
         $klasa = preg_replace("/[0-9]/", '', $kod_ucznia); // kod ucznia musi być stringiem
         $this->students[$kod_ucznia] = $kod_ucznia; // liczymy ilu jest uczniów do późniejszego walidowania
         $studentInfo = $this->getStudentInfoFromRow($analizaRow);
+
+        $lokalizacja = $plec = $dysleksja = '';
         foreach ($studentInfo as $item) {
             if (in_array($item, self::PLEC_PATTERN)) {
                 $plec = $item;

@@ -30,19 +30,19 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="skin-blue sidebar-mini">
-<div class="wrapper">
+<div class="wrapper sidebar-collapse">
 
-    @include('layouts.partials.mainheader')
+    {{--@include('layouts.partials.mainheader')--}}
 
-    @section('layouts_partials_contentheader')
-        @include('layouts.partials.sidebar.menu')
-    @endsection
-    @include('layouts.partials.sidebar')
+    {{--@section('layouts_partials_contentheader')--}}
+        {{--@include('layouts.partials.sidebar.menu')--}}
+    {{--@endsection--}}
+    {{--@include('layouts.partials.sidebar')--}}
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('layouts.partials.contentheader')
+{{--        @include('layouts.partials.contentheader')--}}
 
         <!-- Main content -->
         <section class="content">
@@ -53,7 +53,7 @@ desired effect
 
     @include('layouts.partials.controlsidebar')
 
-    @include('layouts.partials.footer')
+{{--    @include('layouts.partials.footer')--}}
 
 </div><!-- ./wrapper -->
 
