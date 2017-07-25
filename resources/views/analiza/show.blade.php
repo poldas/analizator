@@ -7,9 +7,9 @@
 @section('contentheader_title')
 
 @endsection
-@section('layouts_partials_contentheader')
-    @include('analiza.partials.singleanalizamenu', ['menu' => [], 'analiza' => $analiza])
-@endsection
+{{--@section('layouts_partials_contentheader')--}}
+    {{--@include('analiza.partials.singleanalizamenu', ['menu' => [], 'analiza' => $analiza])--}}
+{{--@endsection--}}
 
 @section('main-content')
     <div class="container spark-screen">

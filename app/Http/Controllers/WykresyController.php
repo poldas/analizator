@@ -21,10 +21,12 @@ class WykresyController extends Controller
         $wykres->update($dane);
         return response()->json($wykres);
     }
+
     public function wykresy($id_analiza)
     {
         $wykresy = Wykres::where(['id_analiza' => $id_analiza])->get();
-        return view('analiza.wykresy', compact('wykresy', 'id_analiza'));
+        list($analiza, $uczniowie) = $this->analizator->getAnalizeById($id_analiza);
+        return view('analiza.wykresy', compact('wykresy', 'id_analiza', 'analiza'));
     }
 
     public function wykresyapi($id_analiza)

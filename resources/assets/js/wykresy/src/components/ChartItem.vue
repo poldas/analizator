@@ -12,12 +12,13 @@
         <v-dropdown-item
           v-for="menuItem in generateDoprdownOptions"
           v-bind:item="menuItem"
+          key="menuItem"
           @click.native="doAction(menuItem)">
         </v-dropdown-item>
       </v-dropdown>
     </v-card-row>
     <v-card-text>
-      <chart :item="item" :key="item.id"></chart>
+      <chart :item="item" :key="item"></chart>
       <opis-wykresu v-model="item.opis"></opis-wykresu>
     </v-card-text>
   </v-card>

@@ -36,6 +36,7 @@ class ParseDataSource {
         if(!$this->checkIsValidEntryData()) {
             throw new \Exception('Brakuje danych do parsowania.');
         }
+        // $this->csvDataToParse podmienić k,m na odpowiednie wielkie litery
         $this->prepareHeaderData(); // przyotowuje dane z nagłówka csv, ilość i nazwy zadań obszarów, umiejętności
         $this->prepareAnalizaData(); // przygotowuje dane do tabeli wyników i uczniów
         $this->prepareObszarData(); // przygotowuje dane do tabeli obszarów
@@ -74,7 +75,7 @@ class ParseDataSource {
     private function prepareObszarData()
     {
         if (!$this->nazwy_umiejetnosci) {
-            dd('nie');
+            dd('Nie ma nazw umiejętności.');
             $this->prepareHeaderData();
         }
         foreach ($this->nazwy_umiejetnosci as $pozycja => $nazwaUmiejetnosci) {
@@ -149,6 +150,7 @@ class ParseDataSource {
         $studentInfo = $this->getStudentInfoFromRow($analizaRow);
 
         $lokalizacja = $plec = $dysleksja = '';
+        var_dump($studentInfo);
         foreach ($studentInfo as $item) {
             if (in_array($item, self::PLEC_PATTERN)) {
                 $plec = $item;
@@ -206,7 +208,9 @@ class ParseDataSource {
      */
     private function getAnalizaData()
     {
-        // 4 pierwsze elementy, to dane dla zadań, obszarów, umiejętności, maksymalnej liczby punktów, pozostałe to dane
+        // 4 pierwsze elementy, to dane dla
+        // zadań, obszarów, umiejętności, maksymalnej liczby punktów,
+        // pozostałe to dane
         return array_slice($this->csvDataToParse, 4);
     }
 
@@ -260,7 +264,8 @@ class ParseDataSource {
 
 
     /**
-     * Pobiera dane nagłówka z danych csv, bez wyników egzaminu
+     * Pobiera dane nagłówka z danych csv, bez wyników egzaminu,
+     * pozostawiając same wyniki
      *
      * @return array
      */

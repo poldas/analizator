@@ -1,5 +1,5 @@
 <template>
-    <div :id="item.name">
+    <div :id="item">
     </div>
 </template>
 <script type="text/babel">

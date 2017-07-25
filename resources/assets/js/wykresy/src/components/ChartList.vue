@@ -18,9 +18,9 @@
       </v-row>
 
       <v-row>
-        <v-col xs6="xs6" v-for="(item, index) in list">
-          <chart-item :item="item" :key="item"></chart-item>
-        </v-col>
+        <!--<v-col xs6="xs6" v-for="(item, index) in list" :key="item">-->
+          <!--<chart-item :item="item" key="item"></chart-item>-->
+        <!--</v-col>-->
       </v-row>
     </div>
 </template>
@@ -63,7 +63,7 @@
       }
     },
     components: {
-      ChartItem
+//      ChartItem
     }
   }
 </script>
