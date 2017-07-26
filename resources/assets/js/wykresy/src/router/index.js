@@ -1,15 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ChartList from '@/components/views/ChartView'
+const ChartPage = () => import('~pages/ChartPage.vue')
 
 Vue.use(Router)
-
-export default new Router({
-  routes: [
+const routes = [
     {
-      path: '/',
-      name: 'ChartsView',
-      component: ChartList
+        path: '/',
+        name: 'ChartPage',
+        component: ChartPage
     }
-  ]
+]
+
+const router = new Router({
+    routes,
+    mode: 'history'
 })
+
+router.beforeEach((to, from, next) => {
+  console.log(to, from, next)
+  return next()
+})
+export default router

@@ -1,34 +1,19 @@
 <template>
-    <div>
-      <v-row v-if="!items.length" >
-        <v-col xs12="xs12">
-          <v-alert warning>Nie masz żadnych wykresów.</v-alert>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col xs12="xs12">
-          <v-text-input
-            id="search"
-            name="search"
-            label="Wpisz nazwę wykresu, np. klasa A"
-            v-model="search"
-          ></v-text-input>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <!--<v-col xs6="xs6" v-for="(item, index) in list" :key="item">-->
-          <!--<chart-item :item="item" key="item"></chart-item>-->
-        <!--</v-col>-->
-      </v-row>
-    </div>
+  <v-layout row wrap align-center justify-center py-4>
+    <v-flex xs11 sm10 md8 class="pa-0">
+      <v-card class="px-4 pt-4 mt-3 light-blue darken-1 elevation-0" dark>
+        <v-icon class="green--text text--darken-2" v-if="true">done</v-icon>
+        asdasddasd
+        {{chartData}}
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 <script type="text/babel">
   import ChartItem from './ChartItem.vue'
   export default {
     props: {
-      items: {
+      chartData: {
         required: true,
         type: Array
       }
@@ -52,10 +37,10 @@
     },
     computed: {
       list() {
-        if(!this.items.length) return []
-        if(!this.search.length) return this.items
+        if(!this.chartData.length) return []
+        if(!this.search.length) return this.chartData
         let serches = this.search.split(',')
-        return this.items.filter((item) => {
+        return this.chartData.filter((item) => {
           let tags = Object.keys(item.tags)
           let hit = serches.some((i) => tags.join(',').toLowerCase().indexOf(i.toLowerCase().trim()) !== -1)
           return hit
