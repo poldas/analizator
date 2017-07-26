@@ -51,6 +51,7 @@ class SredniaKlasyParser extends Parser {
             $label = $row[self::COLUMN_NAME_KLASA];
             $chart_id = $this->prepareDataset($dataset, $row, $value, $label, null, null, $series_param_type);
             $dataset[$chart_id]['tags']['średnia procenty'] = 'średnia procenty';
+            $this->prepareSeries($dataset, $chart_id);
         }
         $this->addNewChart($dataset);
     }

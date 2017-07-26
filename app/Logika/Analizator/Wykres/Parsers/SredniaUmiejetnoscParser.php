@@ -65,6 +65,7 @@ class SredniaUmiejetnoscParser extends Parser {
             $wykres_klasa = $row[self::COLUMN_NAME_KLASA];
             $chart_id = $this->prepareDataset($dataset, $row, $value, $label, $wykres_obszar, $wykres_klasa, $series_param_type);
             $dataset[$chart_id]['tags'][$wykres_obszar] = 'obszar '.$wykres_obszar;
+            $this->prepareSeries($dataset, $chart_id);
         }
         $this->addNewChart($dataset);
     }

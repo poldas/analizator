@@ -72,6 +72,14 @@ abstract class Parser implements IParseToChartData {
         return $chart_id;
     }
 
+    protected function prepareSeries(&$dataset, $chart_id) {
+        $klucze = array_keys($dataset[$chart_id]['series']);
+        $series = $dataset[$chart_id]['series'];
+        $dataset[$chart_id]['series'] = [];
+        foreach ($klucze as $klucz) {
+            $dataset[$chart_id]['series'][] = $series[$klucz];
+        }
+    }
     protected function translateKlasa($wykres_klasa)
     {
         if ($wykres_klasa == self::CALOSC) return 'szkoła';

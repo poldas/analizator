@@ -271,7 +271,62 @@
                             }
                         }
                     },
-                    series: asyncData
+                    series: [
+                        {
+                            "data": [
+                                [
+                                    "2.10",
+                                    0.772727
+                                ]
+                            ],
+                            "name": "miasto"
+                        },
+                        {
+                            "data": [
+                                [
+                                    "2.10",
+                                    0.5
+                                ]
+                            ],
+                            "name": "wieś"
+                        },
+                        {
+                            "data": [
+                                [
+                                    "2.4",
+                                    0.636364
+                                ]
+                            ],
+                            "name": "miasto"
+                        },
+                        {
+                            "data": [
+                                [
+                                    "2.4",
+                                    0.4
+                                ]
+                            ],
+                            "name": "wieś"
+                        },
+                        {
+                            "data": [
+                                [
+                                    "cały obszar IV",
+                                    0.727273
+                                ]
+                            ],
+                            "name": "miasto"
+                        },
+                        {
+                            "data": [
+                                [
+                                    "cały obszar IV",
+                                    0.466667
+                                ]
+                            ],
+                            "name": "wieś"
+                        }
+                    ]
                 }
             }
         },
