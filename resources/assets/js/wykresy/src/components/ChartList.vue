@@ -1,15 +1,16 @@
 <template>
   <v-layout row wrap align-center justify-center py-4>
     <v-flex xs11 sm10 md8 class="pa-0">
-      <v-card class="px-4 pt-4 mt-3 light-blue darken-1 elevation-0" dark>
-        <v-icon class="green--text text--darken-2" v-if="true">done</v-icon>
-        asdasddasd
-        {{chartData}}
+      <v-card v-for="chart in chartData" :key="chart.id" class="px-4 pt-4 mt-3 darken-2 elevation-0" dark>
+        <v-btn icon="icon">
+          <v-icon class="white--text">more_vert</v-icon>
+        </v-btn>
+        <chart-item :chart="chart"></chart-item>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
-<script type="text/babel">
+<script>
   import ChartItem from './ChartItem.vue'
   export default {
     props: {
@@ -20,7 +21,8 @@
     },
     data() {
       return {
-        search: 'średnia punkty'
+        search: 'średnia punkty',
+
       }
     },
     methods: {
@@ -48,7 +50,7 @@
       }
     },
     components: {
-//      ChartItem
+      ChartItem
     }
   }
 </script>

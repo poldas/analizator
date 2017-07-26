@@ -2,7 +2,7 @@
   "name": "wykresy",
   "version": "1.0.0",
   "description": "Wykresy do analizy gimnazjalnej",
-  "author": "Daniel Polonis <d.polonis>",
+  "author": "Daniel Polonis <poldas69@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

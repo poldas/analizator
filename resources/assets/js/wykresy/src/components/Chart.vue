@@ -271,7 +271,7 @@
                             }
                         }
                     },
-                    series: []
+                    series: asyncData
                 }
             }
         },
