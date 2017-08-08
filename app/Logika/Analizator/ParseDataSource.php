@@ -150,7 +150,6 @@ class ParseDataSource {
         $studentInfo = $this->getStudentInfoFromRow($analizaRow);
 
         $lokalizacja = $plec = $dysleksja = '';
-        var_dump($studentInfo);
         foreach ($studentInfo as $item) {
             if (in_array($item, self::PLEC_PATTERN)) {
                 $plec = $item;
@@ -161,7 +160,7 @@ class ParseDataSource {
             } else {
                 var_dump($item);
                 var_dump($analizaRow);
-                throw new \Exception('niepoprawny parametr w danych plec, lokalizacja, dysleksja '.$item);
+                throw new \Exception('niepoprawny parametr w danych plec, lokalizacja, dysleksja dla ucznia '.$kod_ucznia);
             }
         }
         return [

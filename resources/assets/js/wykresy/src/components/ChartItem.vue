@@ -7,12 +7,12 @@
   import OpisWykresu from './OpisWykresu.vue'
   import Chart from './Chart.vue'
   export default {
-      props: {
-          chart: {
-              required: true,
-              type: Object
-          }
-      },
+    props: {
+        chart: {
+            required: true,
+            type: Object
+        }
+    },
     data () {
       return {
         opis: '',
